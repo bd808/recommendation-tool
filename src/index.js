@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Disclaimer from './Disclaimer';
+import './style.css';
 import './index.css';
 
 ReactDOM.render(
-  <App />,
+  <Disclaimer />,
   document.getElementById('root')
 );
