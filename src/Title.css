@@ -1,0 +1,28 @@
+.Title-container {
+    display: flex;
+    align-items: center;
+    margin: 1rem 1rem 0 1rem;
+    height: 2rem;
+}
+
+.Title-display-main, .Title-display-secondary, .Title-display-version {
+    font-size: 2rem;
+    line-height: 2rem;
+    align-self: baseline;
+    margin-left: .25rem;
+    font-weight: 300;
+}
+
+.Title-display-main {
+    font-weight: 600;
+}
+
+.Title-display-version {
+    font-size: 1rem;
+}
+
+@media (max-width: 512px) {
+    .Title-display-secondary, .Title-display-version {
+        display: none;
+    }
+}
