@@ -13,9 +13,13 @@ class TitleMenu extends React.Component {
     }
 
     render() {
+        let dropdownMap = {};
+        for (const key of Object.keys(menuItems)) {
+            dropdownMap[key] = key;
+        }
         return (
             <div className="gf-flex-float-right">
-                <Dropdown items={Object.keys(menuItems)} align="right" onSelect={this.onSelect}>
+                <Dropdown items={dropdownMap} align="right" onSelect={this.onSelect}>
                     <div className="gf-icon gf-icon-menu gf-clickable"></div>
                 </Dropdown>
             </div>

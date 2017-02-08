@@ -32,15 +32,16 @@ class Dropdown extends React.Component {
         if (this.props.direction === 'up') {
             activeClass += " Dropdown-up";
         }
+        let dropdownItems = [];
+        for (const key of Object.keys(this.props.items)) {
+            dropdownItems.push(<I18nText name={this.props.items[key]} className="Dropdown-item gf-clickable"
+                                         key={key} onClick={() => this.selectItem(key)} />);
+        }
         return (
             <div className="Dropdown-container" onClick={this.toggleDropdown}>
                 {this.props.children}
                 <div className={activeClass}>
-                    {this.props.items.map(
-                        (item) =>
-                        <I18nText name={item} className="Dropdown-item gf-clickable"
-                                  key={item} onClick={() => this.selectItem(item)} />
-                    )}
+                    {dropdownItems}
                 </div>
             </div>
         );

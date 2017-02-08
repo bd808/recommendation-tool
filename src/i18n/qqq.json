@@ -10,6 +10,8 @@
 	"title-wikipedia": "The name 'Wikipedia'\n{{Identical|Wikipedia}}",
 	"title-gapfinder": "The title of the tool",
 	"title-beta": "Text signifying the tool is in a beta stage\n{{Identical|Beta}}",
+	"title-translation": "The name for the translation recommendation type",
+	"title-related-articles": "The name for the related-articles recommendation type",
 	"menu-how-to": "Text that links to the instructional page",
 	"menu-about": "Text that links to the about page\n{{Identical|About}}",
 	"menu-feedback": "Text that links to the on-wiki talk page\n{{Identical|Feedback}}",

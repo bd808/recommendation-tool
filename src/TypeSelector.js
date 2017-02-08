@@ -1,17 +1,27 @@
 import React from 'react';
 import Dropdown from './Dropdown';
+import I18nText from './I18n';
 
 class TypeSelector extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {currentType: this.props.defaultType};
+    }
+
     onSelect(type) {
-        console.log(this.props.types[type]);
+        this.setState({currentType: type});
     }
 
     render() {
+        let dropdownMap = {};
+        for (const key of Object.keys(this.props.types)) {
+            dropdownMap[key] = this.props.types[key].i18nKey;
+        }
         return (
             <div className="gf-selector-container">
-                <Dropdown items={Object.keys(this.props.types)} onSelect={this.onSelect.bind(this)}>
+                <Dropdown items={dropdownMap} onSelect={this.onSelect.bind(this)}>
                     <div className="gf-selector-button-container gf-clickable">
-                        <span className="gf-selector-text">asdlkfjaslkfdj</span>
+                        <I18nText className="gf-selector-text" name={dropdownMap[this.state.currentType]}/>
                         <div className="gf-icon gf-icon-expand"></div>
                     </div>
                 </Dropdown>

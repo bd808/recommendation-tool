@@ -42,7 +42,7 @@ class App extends React.Component {
                 <I18nProvider language={this.state.language}>
                     <Disclaimer />
                     <Title title="title-gapfinder" />
-                    <TypeSelector types={this.state.types} />
+                    <TypeSelector types={this.state.types} defaultType="translation" />
                     <Input />
                 </I18nProvider>
                 <div className="gf-icon gf-icon-close gf-clickable" onClick={this.setLanguage.bind(this)}></div>
