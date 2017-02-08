@@ -61,10 +61,19 @@ export class I18nText extends React.Component {
     }
 
     render() {
+        let attributes = {};
+        if (this.props.hasOwnProperty('className')) {
+            attributes.className = this.props.className;
+        }
+        if (this.props.hasOwnProperty('onClick')) {
+            attributes.onClick = this.props.onClick;
+        }
         const text = window.jQuery.i18n(this.props.name);
-        return <div>{text}</div>;
+        return <div {...attributes}>{text}</div>;
     }
 }
 I18nText.contextTypes = {
     i18n: React.PropTypes.object
 };
+
+export default I18nText;
