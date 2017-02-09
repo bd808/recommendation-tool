@@ -8,7 +8,8 @@
 		]
 	},
 	"title-wikipedia": "The name 'Wikipedia'\n{{Identical|Wikipedia}}",
-	"title-gapfinder": "The title of the tool",
+	"title-gapfinder": "The title of the translation tool",
+	"title-readmore": "The title of the related articles tool",
 	"title-beta": "Text signifying the tool is in a beta stage\n{{Identical|Beta}}",
 	"title-translation": "The name for the translation recommendation type",
 	"title-related-articles": "The name for the related-articles recommendation type",

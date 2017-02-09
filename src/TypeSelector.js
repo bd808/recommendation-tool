@@ -10,6 +10,7 @@ class TypeSelector extends React.Component {
 
     onSelect(type) {
         this.setState({currentType: type});
+        this.props.onSetType(type);
     }
 
     render() {
@@ -18,11 +19,11 @@ class TypeSelector extends React.Component {
             dropdownMap[key] = this.props.types[key].i18nKey;
         }
         return (
-            <div className="gf-selector-container">
+            <div className="rt-selector-container">
                 <Dropdown items={dropdownMap} onSelect={this.onSelect.bind(this)}>
-                    <div className="gf-selector-button-container gf-clickable">
-                        <I18nText className="gf-selector-text" name={dropdownMap[this.state.currentType]}/>
-                        <div className="gf-icon gf-icon-expand"></div>
+                    <div className="rt-button">
+                        <I18nText className="rt-selector-text" name={dropdownMap[this.state.currentType]}/>
+                        <div className="rt-icon rt-icon-expand"></div>
                     </div>
                 </Dropdown>
             </div>

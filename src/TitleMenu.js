@@ -1,5 +1,6 @@
 import React from 'react';
 import Dropdown from './Dropdown';
+import MenuImage from './images/MenuImage';
 
 const menuItems = {
     'menu-source-code': 'https://github.com/wikimedia/research-recommendation-api',
@@ -8,8 +9,7 @@ const menuItems = {
 
 class TitleMenu extends React.Component {
     onSelect(item) {
-        console.log(item);
-        console.log(menuItems[item]);
+        location.href = menuItems[item];
     }
 
     render() {
@@ -18,9 +18,9 @@ class TitleMenu extends React.Component {
             dropdownMap[key] = key;
         }
         return (
-            <div className="gf-flex-float-right">
-                <Dropdown items={dropdownMap} align="right" onSelect={this.onSelect}>
-                    <div className="gf-icon gf-icon-menu gf-clickable"></div>
+            <div className="Title-float-right">
+                <Dropdown items={dropdownMap} align="right" onSelect={this.onSelect.bind(this)}>
+                    <MenuImage className="Title-menu-icon" />
                 </Dropdown>
             </div>
         );

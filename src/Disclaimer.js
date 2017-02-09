@@ -1,5 +1,6 @@
 import React from 'react';
 import './Disclaimer.css';
+import CloseImage from './images/CloseImage';
 
 class Disclaimer extends React.Component {
     constructor(props) {
@@ -23,8 +24,8 @@ class Disclaimer extends React.Component {
                     <span>This experimental tool is hosted on {labs}. {informationCollected} when you visit this site,
                         and through your use of the tool, is governed by {thisPrivacyStatement} (
                         {not} the {mainPrivacyPolicy}).</span>
-                    <div className="gf-icon gf-icon-close gf-flex-float-right gf-clickable" title="Dismiss"
-                          onClick={this.setDismissedDisclaimer}></div>
+                    <CloseImage className="Disclaimer-close" title="Dismiss"
+                                onClick={this.setDismissedDisclaimer} />
                 </div>
             );
         }

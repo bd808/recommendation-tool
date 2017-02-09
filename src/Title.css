@@ -1,3 +1,10 @@
+.Title-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: 0 0 auto;
+    fill: #36c;
+}
+
 .Title-container {
     display: flex;
     align-items: center;
@@ -25,4 +32,21 @@
     .Title-display-secondary, .Title-display-version {
         display: none;
     }
+}
+
+.Title-float-right {
+    margin-left: auto;
+    height: 2rem;
+}
+
+.Title-menu-icon {
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    cursor: pointer;
+    fill: #222;
+}
+
+.Title-menu-icon:hover {
+    fill: #36c;
 }
