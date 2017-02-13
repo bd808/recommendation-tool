@@ -1,6 +1,7 @@
 import React from 'react';
 import Dropdown from './Dropdown';
 import I18nText from './I18n';
+import ExpandImage from './images/ExpandImage';
 
 class TypeSelector extends React.Component {
     constructor(props) {
@@ -22,8 +23,8 @@ class TypeSelector extends React.Component {
             <div className="rt-selector-container">
                 <Dropdown items={dropdownMap} onSelect={this.onSelect.bind(this)}>
                     <div className="rt-button">
-                        <I18nText className="rt-selector-text" name={dropdownMap[this.state.currentType]}/>
-                        <div className="rt-icon rt-icon-expand"></div>
+                        <I18nText className="rt-selector-text" name={dropdownMap[this.state.currentType]} />
+                        <ExpandImage className="rt-icon" />
                     </div>
                 </Dropdown>
             </div>

@@ -16,14 +16,14 @@ class App extends React.Component {
                     appTitle: 'title-gapfinder',
                     i18nKey: 'title-translation',
                     endpoint: 'https://recommend.wmflabs.org/types/translation',
-                    spec: '/spec',
+                    specPath: '/spec',
                     queryPath: '/v1/articles'
                 },
                 related_articles: {
                     appTitle: 'title-readmore',
                     i18nKey: 'title-related-articles',
                     endpoint: 'https://recommend-related-articles.wmflabs.org/types/related_articles',
-                    spec: '/spec',
+                    specPath: '/spec',
                     queryPath: '/v1/articles'
                 }
             },
@@ -50,7 +50,7 @@ class App extends React.Component {
                 <Title title={this.state.types[this.state.recommendationType].appTitle} />
                 <TypeSelector types={this.state.types} onSetType={this.setType.bind(this)}
                               defaultType={this.state.recommendationType} />
-                <Input />
+                <Input type={this.state.types[this.state.recommendationType]} />
                 <CloseImage className="rt-icon rt-clickable" onClick={this.setLanguage.bind(this)} />
             </I18nProvider>
         )

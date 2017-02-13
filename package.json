@@ -10,7 +10,8 @@
     "react-dom": "^15.4.2",
     "react-onclickoutside": "^5.9.0",
     "jquery": "^3.1.1",
-    "jquery.i18n": "wikimedia/jquery.i18n"
+    "jquery.i18n": "wikimedia/jquery.i18n",
+    "whatwg-fetch": "^2.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

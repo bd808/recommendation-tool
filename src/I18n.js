@@ -1,40 +1,43 @@
 import React from 'react';
 
 class I18n {
-    constructor(language) {
-        this.language = language;
-        this.subscriptions = [];
+    constructor() {
+        this.subscriptions = {};
     }
 
     setLanguage(language) {
-        this.language = language;
-
         let i = window.jQuery.i18n();
-        let data = require('./i18n/' + this.language + '.json');
+        let data = require('./i18n/' + language + '.json');
         let subscriptions = this.subscriptions;
-        i.load(data, this.language).done(
+        i.load(data, language).done(
             function () {
                 i.locale = language;
-                subscriptions.forEach(f => f());
+                for (let subscription of Object.keys(subscriptions)) {
+                    subscriptions[subscription]();
+                }
             }
         );
     }
 
-    subscribe(f) {
-        this.subscriptions.push(f);
+    subscribe(key, f) {
+        this.subscriptions[key] = f;
+    }
+
+    unsubscribe(key) {
+        delete this.subscriptions[key];
     }
 }
 
 export class I18nProvider extends React.Component {
     constructor(p, c) {
         super(p, c);
-        this.i18n = new I18n(this.props.language);
+        this.i18n = new I18n();
+        this.i18n.setLanguage(this.props.language);
         this.mounted = false;
     }
 
     componentDidMount() {
         this.mounted = true;
-        this.componentWillReceiveProps({language: 'en'})
     }
 
     componentWillReceiveProps(next) {
@@ -57,7 +60,11 @@ I18nProvider.childContextTypes = {
 
 export class I18nText extends React.Component {
     componentDidMount() {
-        this.context.i18n.subscribe(() => this.forceUpdate());
+        this.context.i18n.subscribe(this, () => this.forceUpdate());
+    }
+
+    componentWillUnmount() {
+        this.context.i18n.unsubscribe(this);
     }
 
     render() {
