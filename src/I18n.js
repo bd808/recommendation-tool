@@ -67,7 +67,12 @@ export class I18nText extends React.Component {
         this.context.i18n.unsubscribe(this);
     }
 
+    getText() {
+        return window.jQuery.i18n(this.props.name);
+    }
+
     render() {
+        const text = this.getText();
         let attributes = {};
         if (this.props.hasOwnProperty('className')) {
             attributes.className = this.props.className;
@@ -75,11 +80,44 @@ export class I18nText extends React.Component {
         if (this.props.hasOwnProperty('onClick')) {
             attributes.onClick = this.props.onClick;
         }
-        const text = window.jQuery.i18n(this.props.name);
         return <div {...attributes}>{text}</div>;
     }
 }
 I18nText.contextTypes = {
+    i18n: React.PropTypes.object
+};
+
+export class I18nCustom extends React.Component {
+    componentDidMount() {
+        this.context.i18n.subscribe(this, () => this.forceUpdate());
+    }
+
+    componentWillUnmount() {
+        this.context.i18n.unsubscribe(this);
+    }
+
+    getText() {
+        return window.jQuery.i18n(this.props.name);
+    }
+
+    render() {
+        const CustomTag = `${this.props.tagName}`;
+        const text = this.getText();
+        let attributes = {};
+        if (this.props.hasOwnProperty('className')) {
+            attributes.className = this.props.className;
+        }
+        if (this.props.hasOwnProperty('onClick')) {
+            attributes.onClick = this.props.onClick;
+        }
+        if (this.props.hasOwnProperty('attributeName')) {
+            attributes[this.props.attributeName] = text;
+            return <CustomTag {...attributes} />;
+        }
+        return <CustomTag {...attributes}>{text}</CustomTag>;
+    }
+}
+I18nCustom.contextTypes = {
     i18n: React.PropTypes.object
 };
 

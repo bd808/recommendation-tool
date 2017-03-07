@@ -1,7 +1,9 @@
 import React from 'react';
 import 'whatwg-fetch';
-import I18nText from './I18n';
+import {I18nText, I18nCustom} from './I18n';
 import ExpandImage from './images/ExpandImage';
+import SearchImage from './images/SearchImage';
+import './Input.css';
 
 class Input extends React.Component {
     constructor(props) {
@@ -47,18 +49,27 @@ class Input extends React.Component {
 
     render() {
         let parameters = [];
+        let searchBar = [];
         if(this.state.spec.find(parameter => parameter['name'] === 'source')) {
-            parameters.push(<div key="source"><I18nText name="selector-source" /><ExpandImage /></div>);
+            parameters.push(<div key="source" className="rt-button">
+                <I18nText name="selector-source" /><ExpandImage className="rt-icon" /></div>);
         }
         if(this.state.spec.find(parameter => parameter['name'] === 'target')) {
-            parameters.push(<div key="target"><I18nText name="selector-target" /><ExpandImage /></div>);
+            parameters.push(<div key="target" className="rt-button">
+                <I18nText name="selector-target" /><ExpandImage className="rt-icon" /></div>);
         }
         if(this.state.spec.find(parameter => parameter['name'] === 'seed')) {
-            parameters.push(<div key="seed"><I18nText name="search-placeholder" /><ExpandImage /></div>);
+            searchBar.push(<div key="seed" className="Input-search-container">
+                    <SearchImage className="Input-search-icon" />
+                    <I18nCustom tagName="input" name="search-placeholder" attributeName="placeholder" className="Input-search" />
+            </div>);
         }
         return (
             <div>
-                {parameters}
+                <div className="Input-container">
+                    {parameters}
+                </div>
+                {searchBar}
             </div>
         );
     }
