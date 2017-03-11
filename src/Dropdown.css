@@ -29,6 +29,11 @@
     padding: .5rem;
     line-height: 2rem;
     flex: 0 1 auto;
+    cursor: pointer;
+}
+
+.Dropdown-item:hover {
+    background-color: #eaf3ff;
 }
 
 .Dropdown-invisible {

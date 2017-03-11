@@ -34,7 +34,7 @@ class Dropdown extends React.Component {
         }
         let dropdownItems = [];
         for (const key of Object.keys(this.props.items)) {
-            dropdownItems.push(<I18nText name={this.props.items[key]} className="Dropdown-item rt-clickable"
+            dropdownItems.push(<I18nText name={this.props.items[key]} className="Dropdown-item"
                                          key={key} onClick={() => this.selectItem(key)} />);
         }
         return (

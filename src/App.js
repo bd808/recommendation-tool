@@ -2,7 +2,6 @@ import React from 'react';
 import {I18nProvider} from './I18n';
 import Disclaimer from './Disclaimer';
 import Title from './Title';
-import TypeSelector from './TypeSelector';
 import Input from './Input';
 import CloseImage from './images/CloseImage';
 
@@ -48,9 +47,7 @@ class App extends React.Component {
             <I18nProvider language={this.state.language}>
                 <Disclaimer />
                 <Title title={this.state.types[this.state.recommendationType].appTitle} />
-                <TypeSelector types={this.state.types} onSetType={this.setType.bind(this)}
-                              defaultType={this.state.recommendationType} />
-                <Input type={this.state.types[this.state.recommendationType]} />
+                <Input types={this.state.types} type={this.state.recommendationType} onSetType={this.setType.bind(this)} />
                 <CloseImage className="rt-icon rt-clickable" onClick={this.setLanguage.bind(this)} />
             </I18nProvider>
         )

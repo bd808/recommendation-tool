@@ -37,7 +37,6 @@ a:hover {
     align-items: stretch;
     justify-content: flex-start;
     height: 2.5rem;
-    margin: 1rem 1rem 0 1rem;
 }
 
 .rt-selector-button-container {
@@ -62,48 +61,6 @@ a:hover {
     flex: 0 0 auto;
 }
 
-/**
-
-.rt-icon-lightbulb {
-    background-image: url("icons/lightbulb.svg");
-}
-
-.rt-icon-menu {
-    background-image: url("icons/menu.svg");
-}
-
-.rt-icon-menu:hover {
-
-}
-
-.rt-icon-expand {
-    background-image: url("icons/expand.svg");
-    width: 1rem;
-}
-
-.rt-icon-close {
-    background-image: url("icons/close.svg");
-}
-
-.rt-icon-new-window {
-    background-image: url("icons/new_window.svg");
-}
-
-.rt-icon-flag {
-    background-image: url("icons/flag.svg");
-}
-
-.rt-icon-search {
-    background-image: url("icons/search.svg");
-}
-
-.rt-icon-previous {
-    background-image: url("icons/previous.svg");
-}
-
-.rt-icon-next {
-    background-image: url("icons/next.svg");
-}
 
 /**
  * Misc

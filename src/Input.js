@@ -1,5 +1,6 @@
 import React from 'react';
 import 'whatwg-fetch';
+import TypeSelector from './TypeSelector';
 import {I18nText, I18nCustom} from './I18n';
 import ExpandImage from './images/ExpandImage';
 import SearchImage from './images/SearchImage';
@@ -12,14 +13,19 @@ class Input extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchSpec(this.props.type.endpoint + this.props.type.specPath);
+        this.updateForType(this.props.types[this.props.type]);
     }
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.type !== this.props.type) {
             this.setState({spec: []});
-            this.fetchSpec(nextProps.type.endpoint + nextProps.type.specPath);
+            this.updateForType(nextProps.types[nextProps.type]);
         }
+    }
+
+    updateForType(type) {
+        let path = type.endpoint + type.specPath;
+        this.fetchSpec(path);
     }
 
     fetchSpec(path) {
@@ -44,19 +50,20 @@ class Input extends React.Component {
     }
 
     setSpec(data) {
-        this.setState({spec: data['paths'][this.props.type.queryPath]['get']['parameters']});
+        this.setState({spec: data['paths'][this.props.types[this.props.type].queryPath]['get']['parameters']});
     }
 
     render() {
         let parameters = [];
         let searchBar = [];
+        parameters.push(<TypeSelector key="type-selector" types={this.props.types} type={this.props.type} onSetType={this.props.onSetType} />);
         if(this.state.spec.find(parameter => parameter['name'] === 'source')) {
             parameters.push(<div key="source" className="rt-button">
-                <I18nText name="selector-source" /><ExpandImage className="rt-icon" /></div>);
+                <I18nText name="selector-source" /><ExpandImage /></div>);
         }
         if(this.state.spec.find(parameter => parameter['name'] === 'target')) {
             parameters.push(<div key="target" className="rt-button">
-                <I18nText name="selector-target" /><ExpandImage className="rt-icon" /></div>);
+                <I18nText name="selector-target" /><ExpandImage /></div>);
         }
         if(this.state.spec.find(parameter => parameter['name'] === 'seed')) {
             searchBar.push(<div key="seed" className="Input-search-container">
