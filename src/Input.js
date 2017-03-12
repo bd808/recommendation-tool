@@ -1,8 +1,8 @@
 import React from 'react';
 import 'whatwg-fetch';
 import TypeSelector from './TypeSelector';
-import {I18nText, I18nCustom} from './I18n';
-import ExpandImage from './images/ExpandImage';
+import LanguageSelector from './LanguageSelector';
+import {I18nCustom} from './I18n';
 import SearchImage from './images/SearchImage';
 import './Input.css';
 
@@ -58,12 +58,10 @@ class Input extends React.Component {
         let searchBar = [];
         parameters.push(<TypeSelector key="type-selector" types={this.props.types} type={this.props.type} onSetType={this.props.onSetType} />);
         if(this.state.spec.find(parameter => parameter['name'] === 'source')) {
-            parameters.push(<div key="source" className="rt-button">
-                <I18nText name="selector-source" /><ExpandImage /></div>);
+            parameters.push(<LanguageSelector key="source" name="selector-source" />);
         }
         if(this.state.spec.find(parameter => parameter['name'] === 'target')) {
-            parameters.push(<div key="target" className="rt-button">
-                <I18nText name="selector-target" /><ExpandImage /></div>);
+            parameters.push(<LanguageSelector key="target" name="selector-target" />);
         }
         if(this.state.spec.find(parameter => parameter['name'] === 'seed')) {
             searchBar.push(<div key="seed" className="Input-search-container">
