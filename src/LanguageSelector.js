@@ -2,11 +2,12 @@ import React from 'react';
 import I18nText from './I18n';
 import Dropdown from './Dropdown';
 import ExpandImage from './images/ExpandImage';
+import {getSources} from './LanguagePairs';
 
 class LanguageSelector extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {name: this.props.name};
+        this.state = {name: this.props.name, languages: getSources()};
     }
 
     onSelect(language) {
@@ -15,10 +16,9 @@ class LanguageSelector extends React.Component {
     }
 
     render() {
-        const items = ['en', 'de'];
         let dropdownMap = {};
-        for (const item of items) {
-            dropdownMap[item] = window.jQuery.uls.data.getAutonym(item);
+        for (const language of this.state.languages) {
+            dropdownMap[language] = window.jQuery.uls.data.getAutonym(language);
         }
         return (
             <Dropdown items={dropdownMap} onSelect={this.onSelect.bind(this)}>
