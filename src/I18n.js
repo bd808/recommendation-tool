@@ -104,11 +104,10 @@ export class I18nCustom extends React.Component {
         const CustomTag = `${this.props.tagName}`;
         const text = this.getText();
         let attributes = {};
-        if (this.props.hasOwnProperty('className')) {
-            attributes.className = this.props.className;
-        }
-        if (this.props.hasOwnProperty('onClick')) {
-            attributes.onClick = this.props.onClick;
+        for (const property of ['className', 'onClick', 'onChange']){
+            if (this.props.hasOwnProperty(property)) {
+                attributes[property] = this.props[property];
+            }
         }
         if (this.props.hasOwnProperty('attributeName')) {
             attributes[this.props.attributeName] = text;

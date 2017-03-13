@@ -11,8 +11,8 @@ class LanguageSelector extends React.Component {
     }
 
     onSelect(language) {
+        this.props.onSelect(language);
         this.setState({name: window.jQuery.uls.data.getAutonym(language)});
-        console.log(language);
     }
 
     render() {
