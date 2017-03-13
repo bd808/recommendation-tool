@@ -14,7 +14,7 @@ class Input extends React.Component {
             values: {
                 source: undefined,
                 target: undefined,
-                seed: undefined
+                seed: ''
             }
         };
     }
@@ -92,8 +92,9 @@ class Input extends React.Component {
     submitInput() {
         let values = {};
         for (const key of Object.keys(this.state.values)) {
-            if (this.state.values[key] !== undefined) {
-                values[key] = this.state.values[key];
+            let value = this.state.values[key];
+            if (value !== undefined && value !== '') {
+                values[key] = value;
             }
         }
         this.props.onSubmit(values);
