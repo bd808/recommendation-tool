@@ -9,7 +9,14 @@ import './Input.css';
 class Input extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {spec: [], values: {}};
+        this.state = {
+            spec: [],
+            values: {
+                source: undefined,
+                target: undefined,
+                seed: undefined
+            }
+        };
     }
 
     componentDidMount() {
@@ -83,24 +90,34 @@ class Input extends React.Component {
     }
 
     submitInput() {
-        this.props.onSubmit(this.state.values);
+        let values = {};
+        for (const key of Object.keys(this.state.values)) {
+            if (this.state.values[key] !== undefined) {
+                values[key] = this.state.values[key];
+            }
+        }
+        this.props.onSubmit(values);
+    }
+
+    hasParameter(name) {
+        return this.state.spec.find(parameter => parameter['name'] === name);
     }
 
     render() {
         let parameters = [];
         let searchBar = [];
         parameters.push(<TypeSelector key="type-selector" types={this.props.types} type={this.props.type} onSetType={this.props.onSetType} />);
-        if(this.state.spec.find(parameter => parameter['name'] === 'source')) {
-            parameters.push(<LanguageSelector key="source" name="selector-source" onSelect={this.setSource.bind(this)} />);
+        if(this.hasParameter('source')) {
+            parameters.push(<LanguageSelector key="source" value={this.state.values.source} name="selector-source" onSelect={this.setSource.bind(this)} />);
         }
-        if(this.state.spec.find(parameter => parameter['name'] === 'target')) {
-            parameters.push(<LanguageSelector key="target" name="selector-target" onSelect={this.setTarget.bind(this)} />);
+        if(this.hasParameter('target')) {
+            parameters.push(<LanguageSelector key="target" value={this.state.values.target} name="selector-target" onSelect={this.setTarget.bind(this)} />);
         }
-        if(this.state.spec.find(parameter => parameter['name'] === 'seed')) {
+        if(this.hasParameter('seed')) {
             searchBar.push(<div key="seed" className="Input-search-container">
                     <SearchImage className="Input-search-icon" />
                     <I18nCustom onChange={this.setSeed.bind(this)} tagName="input" name="search-placeholder"
-                                attributeName="placeholder" className="Input-search" />
+                                value={this.state.values.seed} attributeName="placeholder" className="Input-search" />
             </div>);
         }
         return (

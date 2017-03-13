@@ -20,14 +20,16 @@ export function getSources() {
     return languagePairs['source'];
 }
 
-export function initialize() {
+export function initialize(callback) {
     if (!languagePairs) {
-        fetchPairs();
+        fetchPairs().then(callback);
+    } else {
+        callback();
     }
 }
 
 function fetchPairs() {
-    fetch('https://cxserver.wikimedia.org/v1/languagepairs')
+    return fetch('https://cxserver.wikimedia.org/v1/languagepairs')
         .then(checkStatus)
         .then(parseJSON)
         .then(setPairs);
