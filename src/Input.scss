@@ -1,0 +1,50 @@
+@import 'base.scss';
+
+.Input-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 2.5rem;
+  margin: 1rem 1rem 0 1rem;
+}
+
+.Input-search-container {
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+  margin: 1rem 0 0 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: $background-color-tabs;
+  border: $border-base;
+  border-color: $border-color-base--active transparent transparent transparent;
+  position: relative;
+}
+
+.Input-search {
+  flex: 1 0 auto;
+  border: 0;
+  background: transparent;
+  line-height: 2rem;
+  font-size: 1rem;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}
+}
+
+.Input-search {
+  @include placeholder {
+    color: $color-placeholder;
+    opacity: 1;
+  }
+}
+
+.Input-search-icon {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+}

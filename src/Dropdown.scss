@@ -1,0 +1,44 @@
+@import 'base.scss';
+
+.Dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.Dropdown-active {
+  position: absolute;
+  top: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 20rem;
+  border: $border-menu;
+  background-color: $background-color-framed;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.Dropdown-right {
+  left: auto;
+  right: 0;
+}
+
+.Dropdown-up {
+  bottom: 100%;
+  top: auto;
+}
+
+.Dropdown-item {
+  white-space: nowrap;
+  padding: .5rem;
+  line-height: 2rem;
+  flex: 0 1 auto;
+  cursor: pointer;
+}
+
+.Dropdown-item:hover {
+  background-color: $background-color-framed--active;
+}
+
+.Dropdown-invisible {
+  display: none;
+}

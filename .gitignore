@@ -16,3 +16,6 @@ npm-debug.log
 
 # ide
 .idea
+
+# Sass
+src/**/*.css
