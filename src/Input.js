@@ -92,16 +92,21 @@ class Input extends React.Component {
     submitInput() {
         let values = {};
         for (const key of Object.keys(this.state.values)) {
-            let value = this.state.values[key];
-            if (value !== undefined && value !== '') {
-                values[key] = value;
+            if (this.hasParameter(key)) {
+                let value = this.state.values[key];
+                if (value !== undefined && value !== '') {
+                    values[key] = value;
+                }
             }
         }
         this.props.onSubmit(values);
     }
 
     hasParameter(name) {
-        return this.state.spec.find(parameter => parameter['name'] === name);
+        const paramInSpec = this.state.spec.find(parameter => parameter['name'] === name);
+        const restrictedInputParams = this.props.types[this.props.type].restrictInput;
+        const paramNotRestricted = restrictedInputParams ? restrictedInputParams.indexOf(name) !== -1 : true;
+        return paramNotRestricted && paramInSpec;
     }
 
     render() {

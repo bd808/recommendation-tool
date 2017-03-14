@@ -13,12 +13,37 @@ class App extends React.Component {
         this.state = {
             language: 'en',
             types: {
+                /**
+                 * Each recommendation type should have an object here
+                 * with values describing it of the form:
+                 *
+                 * <type name>: {
+                 *     appTitle: <i18n key (or a raw value) for the app to take when this type is selected>,
+                 *     i18nKey: <i18n key for the recommendation type itself>,
+                 *     endpoint: <endpoint for the recommendation type>,
+                 *     specPath: <path, starting at the endpoint, to get the swagger spec>,
+                 *     queryPath: <path, starting at the endpoint, to send requests to get recommendations from>,
+                 *     (the following values are optional)
+                 *     restrictInput: <Array of values that will be used by Input to generate input fields;
+                 *                     only input params that are present in both the spec and this array will
+                 *                     be presented to the user>,
+                 *     urlParamsBuilder: <function that takes the params generated from Input and can make
+                 *                        modifications before they are used to query for recommendations>
+                 * }
+                 *
+                 */
                 translation: {
                     appTitle: 'title-gapfinder',
                     i18nKey: 'title-translation',
                     endpoint: 'https://recommend.wmflabs.org/types/translation',
                     specPath: '/spec',
-                    queryPath: '/v1/articles'
+                    queryPath: '/v1/articles',
+                    urlParamsBuilder: (params) => {
+                        if (params.hasOwnProperty('seed')) {
+                            params.search = 'related_articles';
+                        }
+                        return this.encodeParams(params);
+                    }
                 },
                 related_articles: {
                     appTitle: 'title-readmore',
@@ -26,11 +51,33 @@ class App extends React.Component {
                     endpoint: 'https://recommend-related-articles.wmflabs.org/types/related_articles',
                     specPath: '/spec',
                     queryPath: '/v1/articles'
+                },
+                missing_sections: {
+                    appTitle: 'title-expand',
+                    i18nKey: 'title-missing-sections',
+                    // TODO: fill in this placeholder with real values
+                    endpoint: 'https://recommend.wmflabs.org/types/translation',
+                    specPath: '/spec',
+                    queryPath: '/v1/articles',
+                    restrictInput: ['seed'],
+                    urlParamsBuilder: (params) => {
+                        params.source = 'en';
+                        params.target = 'de';
+                        return this.encodeParams(params);
+                    }
                 }
             },
             recommendationType: 'translation',
             recommendations: []
         };
+    }
+
+    encodeParams(params) {
+        let encodedParams = [];
+        for (const key of Object.keys(params)) {
+            encodedParams.push(key + '=' + encodeURIComponent(params[key]));
+        }
+        return encodedParams.join('&');
     }
 
     setLanguage() {
@@ -49,11 +96,8 @@ class App extends React.Component {
         this.setState({recommendations: []});
         const type = this.state.types[this.state.recommendationType];
         let url = type.endpoint + type.queryPath;
-        let joiner = '?';
-        for (const key of Object.keys(values)) {
-            url += joiner + key + '=' + encodeURIComponent(values[key]);
-            joiner = '&';
-        }
+        let encodedParams = type.urlParamsBuilder ? type.urlParamsBuilder(values) : this.encodeParams(values);
+        url += '?' + encodedParams;
         fetch(url)
             .then(this.checkStatus)
             .then(this.parseJSON)
