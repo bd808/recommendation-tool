@@ -1,11 +1,11 @@
-import React from 'react';
-import 'whatwg-fetch';
-import {I18nProvider} from './I18n';
-import Disclaimer from './Disclaimer';
-import Title from './Title';
-import Input from './Input';
-import CloseImage from './images/CloseImage';
-import Recommendations from './Recommendations';
+import React from "react";
+import "whatwg-fetch";
+import {I18nProvider} from "./I18n";
+import Disclaimer from "./Disclaimer";
+import Title from "./Title";
+import Input from "./Input";
+import CloseImage from "./images/CloseImage";
+import Recommendations from "./Recommendations";
 
 class App extends React.Component {
     constructor(p, c) {
@@ -34,9 +34,9 @@ class App extends React.Component {
     }
 
     setLanguage() {
-        if(this.state.language === 'en'){
+        if (this.state.language === 'en') {
             this.setState({language: 'de'});
-        }else{
+        } else {
             this.setState({language: 'en'});
         }
     }
@@ -62,7 +62,7 @@ class App extends React.Component {
     }
 
     checkStatus(response) {
-        if(response.status >= 200 && response.status < 300) {
+        if (response.status >= 200 && response.status < 300) {
             return response;
         } else {
             return response.json().then(Promise.reject.bind(Promise));
@@ -81,10 +81,11 @@ class App extends React.Component {
         return (
             <I18nProvider language={this.state.language}>
                 <Disclaimer />
-                <Title title={this.state.types[this.state.recommendationType].appTitle} />
-                <Input types={this.state.types} type={this.state.recommendationType} onSetType={this.setType.bind(this)} onSubmit={this.onSubmitInput.bind(this)} />
-                <CloseImage className="rt-icon rt-clickable" onClick={this.setLanguage.bind(this)} />
-                <Recommendations items={this.state.recommendations} />
+                <Title title={this.state.types[this.state.recommendationType].appTitle}/>
+                <Input types={this.state.types} type={this.state.recommendationType} onSetType={this.setType.bind(this)}
+                       onSubmit={this.onSubmitInput.bind(this)}/>
+                <CloseImage className="rt-icon rt-clickable" onClick={this.setLanguage.bind(this)}/>
+                <Recommendations items={this.state.recommendations}/>
             </I18nProvider>
         )
     }

@@ -1,4 +1,4 @@
-import 'whatwg-fetch';
+import "whatwg-fetch";
 
 export const languageToDomainMapping = {
     "be-tarask": "be-x-old",
@@ -36,7 +36,7 @@ function fetchPairs() {
 }
 
 function checkStatus(response) {
-    if(response.status >= 200 && response.status < 300) {
+    if (response.status >= 200 && response.status < 300) {
         return response;
     } else {
         let error = new Error(response.statusText);

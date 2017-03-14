@@ -1,8 +1,8 @@
-import React from 'react';
-import I18nText from './I18n';
-import Dropdown from './Dropdown';
-import ExpandImage from './images/ExpandImage';
-import {getSources} from './LanguagePairs';
+import React from "react";
+import I18nText from "./I18n";
+import Dropdown from "./Dropdown";
+import ExpandImage from "./images/ExpandImage";
+import {getSources} from "./LanguagePairs";
 
 class LanguageSelector extends React.Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class LanguageSelector extends React.Component {
         return (
             <Dropdown items={dropdownMap} onSelect={this.onSelect.bind(this)}>
                 <div className="rt-button">
-                    <I18nText className="rt-selector-text" name={name} />
+                    <I18nText className="rt-selector-text" name={name}/>
                     <ExpandImage />
                 </div>
             </Dropdown>

@@ -1,9 +1,9 @@
-import React from 'react';
-import I18nText from './I18n';
-import './Dropdown.css';
+import React from "react";
+import I18nText from "./I18n";
+import "./Dropdown.css";
 
 class Dropdown extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {active: false};
         this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -35,7 +35,7 @@ class Dropdown extends React.Component {
         let dropdownItems = [];
         for (const key of Object.keys(this.props.items)) {
             dropdownItems.push(<I18nText name={this.props.items[key]} className="Dropdown-item"
-                                         key={key} onClick={() => this.selectItem(key)} />);
+                                         key={key} onClick={() => this.selectItem(key)}/>);
         }
         return (
             <div className="Dropdown-container" onClick={this.toggleDropdown}>

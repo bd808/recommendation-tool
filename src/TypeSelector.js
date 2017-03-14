@@ -1,7 +1,7 @@
-import React from 'react';
-import Dropdown from './Dropdown';
-import I18nText from './I18n';
-import SelectorImage from './images/SelectorImage';
+import React from "react";
+import Dropdown from "./Dropdown";
+import I18nText from "./I18n";
+import SelectorImage from "./images/SelectorImage";
 
 class TypeSelector extends React.Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class TypeSelector extends React.Component {
         return (
             <Dropdown items={dropdownMap} onSelect={this.onSelect.bind(this)}>
                 <div className="rt-button">
-                    <I18nText className="rt-selector-text" name={dropdownMap[this.state.currentType]} />
+                    <I18nText className="rt-selector-text" name={dropdownMap[this.state.currentType]}/>
                     <SelectorImage />
                 </div>
             </Dropdown>

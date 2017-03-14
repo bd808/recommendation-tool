@@ -1,6 +1,6 @@
-import React from 'react';
-import './Disclaimer.css';
-import CloseImage from './images/CloseImage';
+import React from "react";
+import "./Disclaimer.css";
+import CloseImage from "./images/CloseImage";
 
 class Disclaimer extends React.Component {
     constructor(props) {
@@ -25,7 +25,7 @@ class Disclaimer extends React.Component {
                         and through your use of the tool, is governed by {thisPrivacyStatement} (
                         {not} the {mainPrivacyPolicy}).</span>
                     <CloseImage className="Disclaimer-close" title="Dismiss"
-                                onClick={this.setDismissedDisclaimer} />
+                                onClick={this.setDismissedDisclaimer}/>
                 </div>
             );
         }

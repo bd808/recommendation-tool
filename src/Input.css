@@ -32,14 +32,17 @@
 .Input-search::-webkit-input-placeholder {
     color: #666;
 }
+
 .Input-search:-moz-placeholder {
     color: #666;
     opacity: 1;
 }
+
 .Input-search::-moz-placeholder {
     color: #666;
     opacity: 1;
 }
+
 .Input-search:-ms-input-placeholder {
     color: #666;
 }

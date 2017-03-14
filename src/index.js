@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './style.css';
-import {initialize} from './LanguagePairs';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "./style.css";
+import {initialize} from "./LanguagePairs";
 
-window.jQuery =require('jquery');
+window.jQuery = require('jquery');
 window.$ = require('jquery');
 
 require('jquery.i18n/src/jquery.i18n');

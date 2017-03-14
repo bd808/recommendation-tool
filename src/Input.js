@@ -1,10 +1,10 @@
-import React from 'react';
-import 'whatwg-fetch';
-import TypeSelector from './TypeSelector';
-import LanguageSelector from './LanguageSelector';
-import {I18nCustom} from './I18n';
-import SearchImage from './images/SearchImage';
-import './Input.css';
+import React from "react";
+import "whatwg-fetch";
+import TypeSelector from "./TypeSelector";
+import LanguageSelector from "./LanguageSelector";
+import {I18nCustom} from "./I18n";
+import SearchImage from "./images/SearchImage";
+import "./Input.css";
 
 class Input extends React.Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class Input extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.type !== this.props.type) {
+        if (nextProps.type !== this.props.type) {
             this.setState({spec: []});
             this.updateForType(nextProps.types[nextProps.type]);
         }
@@ -43,7 +43,7 @@ class Input extends React.Component {
     }
 
     checkStatus(response) {
-        if(response.status >= 200 && response.status < 300) {
+        if (response.status >= 200 && response.status < 300) {
             return response;
         } else {
             let error = new Error(response.statusText);
@@ -107,18 +107,21 @@ class Input extends React.Component {
     render() {
         let parameters = [];
         let searchBar = [];
-        parameters.push(<TypeSelector key="type-selector" types={this.props.types} type={this.props.type} onSetType={this.props.onSetType} />);
-        if(this.hasParameter('source')) {
-            parameters.push(<LanguageSelector key="source" value={this.state.values.source} name="selector-source" onSelect={this.setSource.bind(this)} />);
+        parameters.push(<TypeSelector key="type-selector" types={this.props.types} type={this.props.type}
+                                      onSetType={this.props.onSetType}/>);
+        if (this.hasParameter('source')) {
+            parameters.push(<LanguageSelector key="source" value={this.state.values.source} name="selector-source"
+                                              onSelect={this.setSource.bind(this)}/>);
         }
-        if(this.hasParameter('target')) {
-            parameters.push(<LanguageSelector key="target" value={this.state.values.target} name="selector-target" onSelect={this.setTarget.bind(this)} />);
+        if (this.hasParameter('target')) {
+            parameters.push(<LanguageSelector key="target" value={this.state.values.target} name="selector-target"
+                                              onSelect={this.setTarget.bind(this)}/>);
         }
-        if(this.hasParameter('seed')) {
+        if (this.hasParameter('seed')) {
             searchBar.push(<div key="seed" className="Input-search-container">
-                    <SearchImage className="Input-search-icon" />
-                    <I18nCustom onChange={this.setSeed.bind(this)} tagName="input" name="search-placeholder"
-                                value={this.state.values.seed} attributeName="placeholder" className="Input-search" />
+                <SearchImage className="Input-search-icon"/>
+                <I18nCustom onChange={this.setSeed.bind(this)} tagName="input" name="search-placeholder"
+                            value={this.state.values.seed} attributeName="placeholder" className="Input-search"/>
             </div>);
         }
         return (

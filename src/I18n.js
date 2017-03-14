@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 class I18n {
     constructor() {
@@ -41,7 +41,7 @@ export class I18nProvider extends React.Component {
     }
 
     componentWillReceiveProps(next) {
-        if(this.mounted) {
+        if (this.mounted) {
             this.i18n.setLanguage(next.language);
         }
     }
@@ -50,7 +50,7 @@ export class I18nProvider extends React.Component {
         return {i18n: this.i18n};
     }
 
-    render () {
+    render() {
         return <div>{this.props.children}</div>
     }
 }
@@ -104,7 +104,7 @@ export class I18nCustom extends React.Component {
         const CustomTag = `${this.props.tagName}`;
         const text = this.getText();
         let attributes = {};
-        for (const property of ['className', 'onClick', 'onChange', 'value']){
+        for (const property of ['className', 'onClick', 'onChange', 'value']) {
             if (this.props.hasOwnProperty(property)) {
                 attributes[property] = this.props[property];
             }

@@ -1,6 +1,6 @@
-import React from 'react';
-import Dropdown from './Dropdown';
-import MenuImage from './images/MenuImage';
+import React from "react";
+import Dropdown from "./Dropdown";
+import MenuImage from "./images/MenuImage";
 
 const menuItems = {
     'menu-source-code': 'https://github.com/wikimedia/research-recommendation-api',
@@ -20,7 +20,7 @@ class TitleMenu extends React.Component {
         return (
             <div className="Title-float-right">
                 <Dropdown items={dropdownMap} align="right" onSelect={this.onSelect.bind(this)}>
-                    <MenuImage className="Title-menu-icon" />
+                    <MenuImage className="Title-menu-icon"/>
                 </Dropdown>
             </div>
         );
