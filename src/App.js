@@ -55,16 +55,9 @@ class App extends React.Component {
                 missing_sections: {
                     appTitle: 'title-expand',
                     i18nKey: 'title-missing-sections',
-                    // TODO: fill in this placeholder with real values
-                    endpoint: 'https://recommend.wmflabs.org/types/translation',
+                    endpoint: 'https://recommend-missing-sections.wmflabs.org/types/missing_sections',
                     specPath: '/spec',
-                    queryPath: '/v1/articles',
-                    restrictInput: ['seed'],
-                    urlParamsBuilder: (params) => {
-                        params.source = 'en';
-                        params.target = 'de';
-                        return this.encodeParams(params);
-                    }
+                    queryPath: '/v1/sections',
                 }
             },
             recommendationType: 'translation',

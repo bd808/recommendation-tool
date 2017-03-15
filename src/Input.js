@@ -14,7 +14,8 @@ class Input extends React.Component {
             values: {
                 source: undefined,
                 target: undefined,
-                seed: ''
+                seed: '',
+                category: ''
             }
         };
     }
@@ -72,6 +73,10 @@ class Input extends React.Component {
         this.setValue('seed', event.target.value);
     }
 
+    setCategory(event) {
+        this.setValue('category', event.target.value);
+    }
+
     setValueAndSubmit(name, value) {
         this.setValue(name, value, this.submitInput);
     }
@@ -123,11 +128,22 @@ class Input extends React.Component {
                                               onSelect={this.setTarget.bind(this)}/>);
         }
         if (this.hasParameter('seed')) {
-            searchBar.push(<div key="seed" className="Input-search-container">
-                <SearchImage className="Input-search-icon"/>
-                <I18nCustom onChange={this.setSeed.bind(this)} tagName="input" name="search-placeholder"
-                            value={this.state.values.seed} attributeName="placeholder" className="Input-search"/>
-            </div>);
+            searchBar.push(
+                <div key="seed" className="Input-search-container">
+                    <SearchImage className="Input-search-icon"/>
+                    <I18nCustom onChange={this.setSeed.bind(this)} tagName="input" name="search-placeholder"
+                                value={this.state.values.seed} attributeName="placeholder" className="Input-search"/>
+                </div>
+            );
+        }
+        if (this.hasParameter('category')) {
+            searchBar.push(
+                <div key="category" className="Input-search-container">
+                    <SearchImage className="Input-search-icon"/>
+                    <I18nCustom onChange={this.setCategory.bind(this)} tagName="input" name="category-placeholder"
+                                value={this.state.values.category} attributeName="placeholder" className="Input-search"/>
+                </div>
+            );
         }
         return (
             <form onSubmit={this.onSubmit.bind(this)}>
