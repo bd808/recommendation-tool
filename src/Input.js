@@ -40,7 +40,8 @@ class Input extends React.Component {
         fetch(path)
             .then(this.checkStatus)
             .then(this.parseJSON)
-            .then(this.setSpec.bind(this));
+            .then(this.setSpec.bind(this))
+            .then(this.submitOnLoad.bind(this));
     }
 
     checkStatus(response) {
@@ -59,6 +60,12 @@ class Input extends React.Component {
 
     setSpec(data) {
         this.setState({spec: data['paths'][this.props.types[this.props.type].queryPath]['get']['parameters']});
+    }
+
+    submitOnLoad() {
+        if (this.props.types[this.props.type].submitOnLoad === true) {
+            this.submitInput();
+        }
     }
 
     setSource(language) {

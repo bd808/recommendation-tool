@@ -4,7 +4,6 @@ import {I18nProvider} from "./I18n";
 import Disclaimer from "./Disclaimer";
 import Title from "./Title";
 import Input from "./Input";
-import CloseImage from "./images/CloseImage";
 import Recommendations from "./Recommendations";
 
 class App extends React.Component {
@@ -28,7 +27,9 @@ class App extends React.Component {
                  *                     only input params that are present in both the spec and this array will
                  *                     be presented to the user>,
                  *     urlParamsBuilder: <function that takes the params generated from Input and can make
-                 *                        modifications before they are used to query for recommendations>
+                 *                        modifications before they are used to query for recommendations>,
+                 *     submitOnLoad: <optional boolean that will submit a query when the type loads if true,
+                 *                    but defaults to false>
                  * }
                  *
                  */
@@ -57,10 +58,11 @@ class App extends React.Component {
                     i18nKey: 'title-missing-sections',
                     endpoint: 'https://recommend-missing-sections.wmflabs.org/types/missing_sections',
                     specPath: '/spec',
-                    queryPath: '/v1/sections',
+                    queryPath: '/v1/articles',
+                    submitOnLoad: true
                 }
             },
-            recommendationType: 'translation',
+            recommendationType: 'missing_sections',
             recommendations: []
         };
     }
@@ -121,7 +123,6 @@ class App extends React.Component {
                 <Title title={this.state.types[this.state.recommendationType].appTitle}/>
                 <Input types={this.state.types} type={this.state.recommendationType} onSetType={this.setType.bind(this)}
                        onSubmit={this.onSubmitInput.bind(this)}/>
-                <CloseImage className="rt-icon rt-clickable" onClick={this.setLanguage.bind(this)}/>
                 <Recommendations items={this.state.recommendations}/>
             </I18nProvider>
         )

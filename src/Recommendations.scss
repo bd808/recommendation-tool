@@ -1,0 +1,22 @@
+@import 'base.scss';
+
+.Recommendations-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 1rem 0 0 1rem;
+}
+
+.Recommendations-item {
+  display: flex;
+  flex-direction: column;
+  border: $border-base;
+  min-height: 16rem;
+  width: 16rem;
+  margin: 0 1rem 1rem 0;
+  position: relative;
+}
+
+.Recommendations-item:hover {
+  border-color: $border-color-base--active;
+}
