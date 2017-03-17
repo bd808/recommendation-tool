@@ -20,3 +20,58 @@
 .Recommendations-item:hover {
   border-color: $border-color-base--active;
 }
+
+.Recommendations-image {
+  width: 100%;
+  height: 8rem;
+  border: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: 33%;
+  background-position-x: center;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.Recommendations-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  margin-left: .1rem;
+  cursor: pointer;
+}
+
+.Recommendations-footer {
+  display: flex;
+  align-items: flex-end;
+  margin-left: .1rem;
+}
+
+.Recommendations-title-container {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.Recommendations-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.Recommendations-description {
+  font-size: 1rem;
+  overflow: hidden;
+  flex: 1 0 auto;
+}
+
+.Recommendations-title, .Recommendations-motivation {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Recommendations-motivation {
+  font-size: .8rem;
+  flex: 1 0 auto;
+  cursor: pointer;
+}

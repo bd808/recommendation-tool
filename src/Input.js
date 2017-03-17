@@ -4,6 +4,7 @@ import TypeSelector from "./TypeSelector";
 import LanguageSelector from "./LanguageSelector";
 import {I18nCustom} from "./I18n";
 import SearchImage from "./images/SearchImage";
+import {checkStatus, parseJSON} from './util';
 import "./Input.css";
 
 class Input extends React.Component {
@@ -38,24 +39,10 @@ class Input extends React.Component {
 
     fetchSpec(path) {
         fetch(path)
-            .then(this.checkStatus)
-            .then(this.parseJSON)
+            .then(checkStatus)
+            .then(parseJSON)
             .then(this.setSpec.bind(this))
             .then(this.submitOnLoad.bind(this));
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        } else {
-            let error = new Error(response.statusText);
-            error.response = response;
-            throw error;
-        }
-    }
-
-    parseJSON(response) {
-        return response.json();
     }
 
     setSpec(data) {

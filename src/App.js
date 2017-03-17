@@ -5,6 +5,7 @@ import Disclaimer from "./Disclaimer";
 import Title from "./Title";
 import Input from "./Input";
 import Recommendations from "./Recommendations";
+import {checkStatus, parseJSON} from './util';
 
 class App extends React.Component {
     constructor(p, c) {
@@ -22,13 +23,17 @@ class App extends React.Component {
                  *     endpoint: <endpoint for the recommendation type>,
                  *     specPath: <path, starting at the endpoint, to get the swagger spec>,
                  *     queryPath: <path, starting at the endpoint, to send requests to get recommendations from>,
-                 *     (the following values are optional)
+                 *     motivation: <function that takes an item and returns a motivation value to be placed in
+                 *                  the footer of the recommendation card>,
+                 *
+                 *     ******** the following values are optional ********
+                 *
                  *     restrictInput: <Array of values that will be used by Input to generate input fields;
                  *                     only input params that are present in both the spec and this array will
                  *                     be presented to the user>,
                  *     urlParamsBuilder: <function that takes the params generated from Input and can make
                  *                        modifications before they are used to query for recommendations>,
-                 *     submitOnLoad: <optional boolean that will submit a query when the type loads if true,
+                 *     submitOnLoad: <boolean that will submit a query when the type loads if true,
                  *                    but defaults to false>
                  * }
                  *
@@ -44,14 +49,16 @@ class App extends React.Component {
                             params.search = 'related_articles';
                         }
                         return this.encodeParams(params);
-                    }
+                    },
+                    motivation: () => ''
                 },
                 related_articles: {
                     appTitle: 'title-readmore',
                     i18nKey: 'title-related-articles',
                     endpoint: 'https://recommend-related-articles.wmflabs.org/types/related_articles',
                     specPath: '/spec',
-                    queryPath: '/v1/articles'
+                    queryPath: '/v1/articles',
+                    motivation: () => ''
                 },
                 missing_sections: {
                     appTitle: 'title-expand',
@@ -59,11 +66,15 @@ class App extends React.Component {
                     endpoint: 'https://recommend-missing-sections.wmflabs.org/types/missing_sections',
                     specPath: '/spec',
                     queryPath: '/v1/articles',
-                    submitOnLoad: true
+                    submitOnLoad: true,
+                    motivation: (item) => {
+                        return item.sections.length + ' sections to add';
+                    }
                 }
             },
             recommendationType: 'missing_sections',
-            recommendations: []
+            recommendations: [],
+            recommendationsSourceLanguage: 'en'
         };
     }
 
@@ -75,12 +86,8 @@ class App extends React.Component {
         return encodedParams.join('&');
     }
 
-    setLanguage() {
-        if (this.state.language === 'en') {
-            this.setState({language: 'de'});
-        } else {
-            this.setState({language: 'en'});
-        }
+    setLanguage(language) {
+        this.setState({language: language});
     }
 
     setType(newType) {
@@ -88,28 +95,16 @@ class App extends React.Component {
     }
 
     onSubmitInput(values) {
-        this.setState({recommendations: []});
+        this.setState({recommendations: [], recommendationsSourceLanguage: values.hasOwnProperty('source') ? values.source : 'en'});
         const type = this.state.types[this.state.recommendationType];
         let url = type.endpoint + type.queryPath;
         let encodedParams = type.urlParamsBuilder ? type.urlParamsBuilder(values) : this.encodeParams(values);
         url += '?' + encodedParams;
         fetch(url)
-            .then(this.checkStatus)
-            .then(this.parseJSON)
+            .then(checkStatus)
+            .then(parseJSON)
             .then(this.setRecommendations.bind(this))
             .catch((ex) => this.setState({recommendations: [ex]}));
-    }
-
-    checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response;
-        } else {
-            return response.json().then(Promise.reject.bind(Promise));
-        }
-    }
-
-    parseJSON(response) {
-        return response.json();
     }
 
     setRecommendations(results) {
@@ -123,7 +118,8 @@ class App extends React.Component {
                 <Title title={this.state.types[this.state.recommendationType].appTitle}/>
                 <Input types={this.state.types} type={this.state.recommendationType} onSetType={this.setType.bind(this)}
                        onSubmit={this.onSubmitInput.bind(this)}/>
-                <Recommendations items={this.state.recommendations}/>
+                <Recommendations items={this.state.recommendations} source={this.state.recommendationsSourceLanguage}
+                                 type={this.state.types[this.state.recommendationType]}/>
             </I18nProvider>
         )
     }
