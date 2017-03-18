@@ -51,11 +51,28 @@
   min-height: 2rem;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
-.Recommendations-title {
+.Recommendations-title, .Recommendations-title-expand {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.Recommendations-title-expand {
+  display: none;
+  position: absolute;
+  background: $background-color-base;
+  top: 0;
+  word-break: break-all;
+}
+
+.Recommendations-title-container:hover .Recommendations-title-expand {
+  display: unset;
+}
+
+.Recommendations-title-container:hover .Recommendations-title {
+  display: none
 }
 
 .Recommendations-description {

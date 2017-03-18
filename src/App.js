@@ -74,7 +74,9 @@ class App extends React.Component {
             },
             recommendationType: 'missing_sections',
             recommendations: [],
-            recommendationsSourceLanguage: 'en'
+            recommendationsSourceLanguage: 'en',
+            error: undefined,
+            loading: false
         };
     }
 
@@ -95,7 +97,12 @@ class App extends React.Component {
     }
 
     onSubmitInput(values) {
-        this.setState({recommendations: [], recommendationsSourceLanguage: values.hasOwnProperty('source') ? values.source : 'en'});
+        this.setState({
+            recommendations: [],
+            recommendationsSourceLanguage: values.hasOwnProperty('source') ? values.source : 'en',
+            error: undefined,
+            loading: true
+        });
         const type = this.state.types[this.state.recommendationType];
         let url = type.endpoint + type.queryPath;
         let encodedParams = type.urlParamsBuilder ? type.urlParamsBuilder(values) : this.encodeParams(values);
@@ -104,22 +111,30 @@ class App extends React.Component {
             .then(checkStatus)
             .then(parseJSON)
             .then(this.setRecommendations.bind(this))
-            .catch((ex) => this.setState({recommendations: [ex]}));
+            .catch((ex) => this.setState({error: ex, loading: false}));
     }
 
     setRecommendations(results) {
-        this.setState({recommendations: results});
+        this.setState({recommendations: results, loading: false});
     }
 
     render() {
+        let result = '';
+        if (this.state.loading === true) {
+            result = 'Loading';
+        } else if (this.state.error !== undefined) {
+            result = `${JSON.stringify(this.state.error)}`;
+        } else {
+            result = <Recommendations items={this.state.recommendations} source={this.state.recommendationsSourceLanguage}
+                                      type={this.state.types[this.state.recommendationType]}/>;
+        }
         return (
             <I18nProvider language={this.state.language}>
                 <Disclaimer />
                 <Title title={this.state.types[this.state.recommendationType].appTitle}/>
                 <Input types={this.state.types} type={this.state.recommendationType} onSetType={this.setType.bind(this)}
                        onSubmit={this.onSubmitInput.bind(this)}/>
-                <Recommendations items={this.state.recommendations} source={this.state.recommendationsSourceLanguage}
-                                 type={this.state.types[this.state.recommendationType]}/>
+                {result}
             </I18nProvider>
         )
     }

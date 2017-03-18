@@ -74,7 +74,10 @@ class Recommendations extends React.Component {
                     <div className="Recommendations-body">
                         <div className="Recommendations-title-container">
                             <div className="Recommendations-title">
-                                {title}
+                                {title.replace(/_/g, ' ')}
+                            </div>
+                            <div className="Recommendations-title-expand">
+                                {title.replace(/_/g, ' ')}
                             </div>
                         </div>
                         <div className="Recommendations-description">
