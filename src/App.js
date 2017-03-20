@@ -1,10 +1,11 @@
 import React from "react";
 import "whatwg-fetch";
-import {I18nProvider} from "./I18n";
+import {I18nProvider, I18nText} from "./I18n";
 import Disclaimer from "./Disclaimer";
 import Title from "./Title";
 import Input from "./Input";
 import Recommendations from "./Recommendations";
+import StatusMessage from "./StatusMessage";
 import {checkStatus, parseJSON} from './util';
 
 class App extends React.Component {
@@ -121,9 +122,9 @@ class App extends React.Component {
     render() {
         let result = '';
         if (this.state.loading === true) {
-            result = 'Loading';
+            result = <StatusMessage><I18nText name="status-preparing"/></StatusMessage>;
         } else if (this.state.error !== undefined) {
-            result = `${JSON.stringify(this.state.error)}`;
+            result = <StatusMessage>{JSON.stringify(this.state.error)}</StatusMessage>;
         } else {
             result = <Recommendations items={this.state.recommendations} source={this.state.recommendationsSourceLanguage}
                                       type={this.state.types[this.state.recommendationType]}/>;

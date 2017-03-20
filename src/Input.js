@@ -125,7 +125,7 @@ class Input extends React.Component {
             searchBar.push(
                 <div key="seed" className="Input-search-container">
                     <SearchImage className="Input-search-icon"/>
-                    <I18nCustom onChange={this.setSeed.bind(this)} tagName="input" name="search-placeholder"
+                    <I18nCustom onChange={this.setSeed.bind(this)} tagName="input" name="seed-placeholder"
                                 value={this.state.values.seed} attributeName="placeholder" className="Input-search"/>
                 </div>
             );
