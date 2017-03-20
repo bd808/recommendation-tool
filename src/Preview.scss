@@ -1,0 +1,78 @@
+@import 'base.scss';
+
+.Preview {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 2rem);
+  margin: 1rem;
+  border: $border-base;
+  background: $background-color-framed;
+}
+
+.Preview-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  height: 2rem;
+}
+
+.Preview-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  align-self: baseline;
+  font-weight: 600;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.Preview-button {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+}
+
+.Preview-button:hover {
+
+}
+
+.Preview-button-disabled {
+  cursor: not-allowed;
+}
+
+.Preview-body {
+  flex: 1 0 auto;
+  display: flex;
+  border-top: $border-base;
+  border-bottom: $border-base;
+}
+
+.Preview-iframe {
+  border: 0;
+  flex: 1 1 auto;
+}
+
+.Preview-footer {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 2rem;
+}
+
+.Preview-footer-left {
+  display: flex;
+  justify-content: flex-start;
+  flex: 0 0 auto;
+}
+
+.Preview-footer-right {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1 0 auto;
+  flex-wrap: wrap;
+  max-width: 100%;
+}

@@ -1,3 +1,5 @@
+export const isSrcDocSupported = document.createElement('iframe').srcdoc !== undefined;
+
 export function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
@@ -8,4 +10,12 @@ export function checkStatus(response) {
 
 export function parseJSON(response) {
     return response.json();
+}
+
+export function encodeParams(params) {
+    let encodedParams = [];
+    for (const key of Object.keys(params)) {
+        encodedParams.push(key + '=' + encodeURIComponent(params[key]));
+    }
+    return encodedParams.join('&');
 }

@@ -52,23 +52,25 @@ class Recommendations extends React.Component {
         const lines = require('./images/lines.svg');
         let thumbnail = `url(${lines})`;
         if (data.hasOwnProperty('image')) {
-            thumbnail = data.image.urls ? `url(${data.image.urls['320']})` : thumbnail;
+            if (data.image.hasOwnProperty('urls')) {
+                // Get smallest thumbnail
+                const imageUrlIndex = Object.keys(data.image.urls).map(Number).sort((a, b) => a - b)[0];
+                const imageUrl = data.image.urls[imageUrlIndex];
+                thumbnail = `url(${imageUrl})`;
+            }
         }
 
         this.setItemValue(title, 'thumbnail', thumbnail);
         this.setItemValue(title, 'description', description);
     }
 
-    alertRaw(title) {
-        alert(JSON.stringify(this.state.items[title].raw_item));
-    }
-
     render() {
         let items = [];
         for (const title of Object.keys(this.state.items)) {
             const item = this.state.items[title];
+            const index = items.length;
             items.push(
-                <div key={items.length} className="Recommendations-item" onClick={this.alertRaw.bind(this, title)}>
+                <div key={index} className="Recommendations-item" onClick={() => this.props.showPreview(index)}>
                     <div className="Recommendations-image" style={{backgroundImage: item.thumbnail}}>
                     </div>
                     <div className="Recommendations-body">

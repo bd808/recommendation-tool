@@ -1,12 +1,15 @@
 import React from "react";
 import "whatwg-fetch";
+import Modal from "react-modal";
 import {I18nProvider, I18nText} from "./I18n";
 import Disclaimer from "./Disclaimer";
 import Title from "./Title";
 import Input from "./Input";
 import Recommendations from "./Recommendations";
 import StatusMessage from "./StatusMessage";
-import {checkStatus, parseJSON} from './util';
+import Preview from "./Preview";
+import {checkStatus, parseJSON, encodeParams} from './util';
+import "./Modal.css";
 
 class App extends React.Component {
     constructor(p, c) {
@@ -49,7 +52,7 @@ class App extends React.Component {
                         if (params.hasOwnProperty('seed')) {
                             params.search = 'related_articles';
                         }
-                        return this.encodeParams(params);
+                        return encodeParams(params);
                     },
                     motivation: () => ''
                 },
@@ -75,18 +78,11 @@ class App extends React.Component {
             },
             recommendationType: 'missing_sections',
             recommendations: [],
+            previewIndex: -1,
             recommendationsSourceLanguage: 'en',
             error: undefined,
             loading: false
         };
-    }
-
-    encodeParams(params) {
-        let encodedParams = [];
-        for (const key of Object.keys(params)) {
-            encodedParams.push(key + '=' + encodeURIComponent(params[key]));
-        }
-        return encodedParams.join('&');
     }
 
     setLanguage(language) {
@@ -100,13 +96,14 @@ class App extends React.Component {
     onSubmitInput(values) {
         this.setState({
             recommendations: [],
+            previewIndex: -1,
             recommendationsSourceLanguage: values.hasOwnProperty('source') ? values.source : 'en',
             error: undefined,
             loading: true
         });
         const type = this.state.types[this.state.recommendationType];
         let url = type.endpoint + type.queryPath;
-        let encodedParams = type.urlParamsBuilder ? type.urlParamsBuilder(values) : this.encodeParams(values);
+        let encodedParams = type.urlParamsBuilder ? type.urlParamsBuilder(values) : encodeParams(values);
         url += '?' + encodedParams;
         fetch(url)
             .then(checkStatus)
@@ -119,15 +116,30 @@ class App extends React.Component {
         this.setState({recommendations: results, loading: false});
     }
 
+    showPreview(index) {
+        this.setState({previewIndex: index});
+    }
+
     render() {
         let result = '';
         if (this.state.loading === true) {
             result = <StatusMessage><I18nText name="status-preparing"/></StatusMessage>;
         } else if (this.state.error !== undefined) {
             result = <StatusMessage>{JSON.stringify(this.state.error)}</StatusMessage>;
+        } else if (this.state.previewIndex !== -1) {
+            result = (
+                <Modal isOpen={true} onRequestClose={this.showPreview.bind(this, -1)} contentLabel="" className="Modal">
+                    <Preview item={this.state.recommendations[this.state.previewIndex]}
+                             index={this.state.previewIndex} length={this.state.recommendations.length}
+                             source={this.state.recommendationsSourceLanguage}
+                             onChangeIndex={this.showPreview.bind(this)}/>
+                </Modal>)
+            ;
         } else {
-            result = <Recommendations items={this.state.recommendations} source={this.state.recommendationsSourceLanguage}
-                                      type={this.state.types[this.state.recommendationType]}/>;
+            result = <Recommendations items={this.state.recommendations}
+                                      source={this.state.recommendationsSourceLanguage}
+                                      type={this.state.types[this.state.recommendationType]}
+                                      showPreview={this.showPreview.bind(this)}/>;
         }
         return (
             <I18nProvider language={this.state.language}>
