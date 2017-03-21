@@ -126,20 +126,28 @@ class App extends React.Component {
             result = <StatusMessage><I18nText name="status-preparing"/></StatusMessage>;
         } else if (this.state.error !== undefined) {
             result = <StatusMessage>{JSON.stringify(this.state.error)}</StatusMessage>;
-        } else if (this.state.previewIndex !== -1) {
-            result = (
-                <Modal isOpen={true} onRequestClose={this.showPreview.bind(this, -1)} contentLabel="" className="Modal">
-                    <Preview item={this.state.recommendations[this.state.previewIndex]}
-                             index={this.state.previewIndex} length={this.state.recommendations.length}
-                             source={this.state.recommendationsSourceLanguage}
-                             onChangeIndex={this.showPreview.bind(this)}/>
-                </Modal>)
-            ;
         } else {
-            result = <Recommendations items={this.state.recommendations}
-                                      source={this.state.recommendationsSourceLanguage}
-                                      type={this.state.types[this.state.recommendationType]}
-                                      showPreview={this.showPreview.bind(this)}/>;
+            result = (
+                <div>
+                    <Recommendations
+                        items={this.state.recommendations}
+                        source={this.state.recommendationsSourceLanguage}
+                        type={this.state.types[this.state.recommendationType]}
+                        showPreview={this.showPreview.bind(this)}/>
+                    <Modal
+                        isOpen={this.state.previewIndex >= 0}
+                        onRequestClose={this.showPreview.bind(this, -1)}
+                        contentLabel=""
+                        className="Modal">
+                        <Preview
+                            item={this.state.recommendations[this.state.previewIndex]}
+                            index={this.state.previewIndex}
+                            length={this.state.recommendations.length}
+                            source={this.state.recommendationsSourceLanguage}
+                            changeIndex={this.showPreview.bind(this)}/>
+                    </Modal>
+                </div>
+            );
         }
         return (
             <I18nProvider language={this.state.language}>

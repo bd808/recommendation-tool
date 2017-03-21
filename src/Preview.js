@@ -106,14 +106,18 @@ class Preview extends React.PureComponent {
 
     next() {
         if (this.props.index < this.props.length - 1) {
-            this.props.onChangeIndex(this.props.index + 1);
+            this.props.changeIndex(this.props.index + 1);
         }
     }
 
     previous() {
         if (this.props.index > 0) {
-            this.props.onChangeIndex(this.props.index - 1);
+            this.props.changeIndex(this.props.index - 1);
         }
+    }
+    
+    close() {
+        this.props.changeIndex(-1);
     }
 
     render() {
@@ -121,9 +125,9 @@ class Preview extends React.PureComponent {
             <div className="Preview">
                 <div className="Preview-header">
                     <div className="Preview-title">
-                        {this.props.item.title}
+                        {this.props.item.title.replace(/_/g, ' ')}
                     </div>
-                    <CloseImage className="Preview-button" onClick={() => this.props.onChangeIndex(-1)}/>
+                    <CloseImage className="Preview-button" onClick={this.close.bind(this)}/>
                 </div>
                 <div className="Preview-body">
                     {this.state.previewHtml}

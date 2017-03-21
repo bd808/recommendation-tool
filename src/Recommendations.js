@@ -14,7 +14,9 @@ class Recommendations extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.updateInfo(nextProps.items);
+        if (nextProps.items !== this.props.items) {
+            this.updateInfo(nextProps.items);
+        }
     }
 
     updateInfo(incomingItems) {
