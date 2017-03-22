@@ -7,7 +7,6 @@ import NextImage from "./images/NextImage";
 import PreviousImage from "./images/PreviousImage";
 import I18nText from "./I18n";
 import "./Preview.css";
-import CustomMenu from "./CustomMenu";
 
 class Preview extends React.PureComponent {
     constructor(props) {
@@ -113,16 +112,9 @@ class Preview extends React.PureComponent {
     }
 
     render() {
-        let sidebarItems = {};
-        for (const item of this.props.item.sections) {
-            const friendlyName = item.charAt(0) + item.slice(1).toLowerCase();
-            sidebarItems[friendlyName] =
-                "https://en.wikipedia.org/w/index.php?" + encodeParams({
-                    title: this.props.item.title,
-                    action: 'edit',
-                    section: 'new',
-                    preloadtitle: friendlyName
-                });
+        let sidebar = '';
+        if (this.props.type.hasOwnProperty('getPreviewSidebar')) {
+            sidebar = this.props.type.getPreviewSidebar(this.props.item);
         }
         return (
             <div className="Preview">
@@ -136,10 +128,7 @@ class Preview extends React.PureComponent {
                     <div className="Preview-iframe-container">
                         {this.state.previewHtml}
                     </div>
-                    <CustomMenu
-                        className="Preview-sidebar"
-                        items={sidebarItems}
-                        tagName="a"/>
+                    {sidebar}
                 </div>
                 <div className="Preview-footer">
                     <div className="Preview-footer-left">

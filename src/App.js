@@ -7,6 +7,7 @@ import Title from "./Title";
 import Input from "./Input";
 import Recommendations from "./Recommendations";
 import StatusMessage from "./StatusMessage";
+import CustomMenu from "./CustomMenu";
 import Preview from "./Preview";
 import {checkStatus, parseJSON, encodeParams} from './util';
 import "./Modal.css";
@@ -38,7 +39,8 @@ class App extends React.Component {
                  *     urlParamsBuilder: <function that takes the params generated from Input and can make
                  *                        modifications before they are used to query for recommendations>,
                  *     submitOnLoad: <boolean that will submit a query when the type loads if true,
-                 *                    but defaults to false>
+                 *                    but defaults to false>,
+                 *     getPreviewSidebar: <function that returns a sidebar to place next to the article preview>
                  * }
                  *
                  */
@@ -73,6 +75,20 @@ class App extends React.Component {
                     submitOnLoad: true,
                     motivation: (item) => {
                         return item.sections.length + ' sections to add';
+                    },
+                    getPreviewSidebar: (item) => {
+                        let sidebarItems = {};
+                        for (const section of item.sections) {
+                            const friendlyName = section.charAt(0) + section.slice(1).toLowerCase();
+                            sidebarItems[friendlyName] =
+                                "https://en.wikipedia.org/w/index.php?" + encodeParams({
+                                    title: item.title,
+                                    action: 'edit',
+                                    section: 'new',
+                                    preloadtitle: friendlyName
+                                });
+                        }
+                        return <CustomMenu className="Preview-sidebar" items={sidebarItems} tagName="a"/>;
                     }
                 }
             },
@@ -143,6 +159,7 @@ class App extends React.Component {
                         className="Modal">
                         <Preview
                             item={this.state.recommendations[this.state.previewIndex]}
+                            type={this.state.types[this.state.recommendationType]}
                             index={this.state.previewIndex}
                             length={this.state.recommendations.length}
                             source={this.state.recommendationsSourceLanguage}
