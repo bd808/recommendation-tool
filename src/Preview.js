@@ -66,7 +66,7 @@ class Preview extends React.PureComponent {
         let parser = new DOMParser();
         let html = parser.parseFromString(data['parse']['headhtml']['*'], 'text/html');
         html.getElementsByTagName('head')[0].insertAdjacentHTML('afterbegin', '<base href="' + baseUrl + '">');
-        html.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', '<style type="text/css">body {background-color: unset;}</style>');
+        html.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', '<style type="text/css">body {background-color: unset; padding: .5rem;}</style>');
         html.getElementsByTagName('body')[0].insertAdjacentHTML('afterbegin', data['parse']['text']['*']);
         let wrap = document.createElement('div');
         wrap.appendChild(html.documentElement);
