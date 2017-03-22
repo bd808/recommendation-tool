@@ -7,13 +7,26 @@
   overflow-y: auto;
 }
 
-.CustomMenu-item {
+.CustomMenu-item-container, .CustomMenu-header-container {
   padding: .5rem;
-  line-height: 2rem;
-  flex: 0 1 auto;
+  flex: 1 0 auto;
+  display: flex;
+  min-height: 2rem;
+  align-items: center;
+}
+
+.CustomMenu-item-container {
   cursor: pointer;
 }
 
-.CustomMenu-item:hover {
+.CustomMenu-item-container:hover {
   background-color: $background-color-framed--active;
+}
+
+.CustomMenu-item, .CustomMenu-header {
+  flex: 0 1 auto;
+}
+
+.CustomMenu-header {
+  font-weight: 600;
 }

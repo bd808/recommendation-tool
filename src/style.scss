@@ -8,8 +8,13 @@ body {
 }
 
 a {
+  color: $color-primary;
   text-decoration: none;
-  color: $color-base;
+}
+
+a:hover {
+  color: $color-primary--hover;
+  text-decoration: underline;
 }
 
 .rt-button {

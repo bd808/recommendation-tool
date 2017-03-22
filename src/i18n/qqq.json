@@ -32,6 +32,7 @@
 	"article-flag": "Text describing the option to flag an article in one of many (currently 2) ways",
 	"article-flag-not-interesting": "Text describing the article as not being interesting to the user",
 	"article-flag-not-notable": "Text describing the article as not being notable for the target language's Wikipedia",
+	"title-add-sections": "Text to tell that what follows is a list of sections that can be added",
 	"modal-close": "Text describing a close action\n{{Identical|Close}}",
 	"modal-new-window": "Text describing opening the article in a new window",
 	"modal-previous": "Action that navigates to the previous article in the list of recommendations",

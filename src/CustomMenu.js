@@ -1,5 +1,5 @@
 import React from "react";
-import {I18nText, I18nCustom} from "./I18n";
+import I18nText from "./I18n";
 import "./CustomMenu.css";
 
 class CustomMenu extends React.Component {
@@ -7,27 +7,39 @@ class CustomMenu extends React.Component {
         this.props.onSelect(item);
     }
 
+    buildCustomMenuItem(key, containerParams, i18nName, tag) {
+        const CustomTag = `${tag}`;
+        return (
+            <CustomTag key={key} className="CustomMenu-item-container" {...containerParams}>
+                <I18nText className="CustomMenu-item" name={i18nName}/>
+            </CustomTag>
+        );
+    }
+
+    buildMenuItem(key, containerParams, i18nName) {
+        return this.buildCustomMenuItem(key, containerParams, i18nName, 'div');
+    }
+
     render() {
         let menuItems = [];
-        for (const key of Object.keys(this.props.items)) {
-            let params = {
-                name: this.props.items[key],
-                className: "CustomMenu-item",
-                key: key
-            };
 
+        if (this.props.hasOwnProperty('headerName')) {
+            menuItems.push(
+                <div key={menuItems.length} className="CustomMenu-header-container">
+                    <I18nText className="CustomMenu-header" name={this.props.headerName}/>
+                </div>
+            );
+        }
+
+        for (const key of Object.keys(this.props.items)) {
             if (this.props.tagName) {
-                params.tagName = this.props.tagName;
-                if (params.tagName === 'a') {
-                    params.href = this.props.items[key];
-                    params.name = key;
+                if (this.props.tagName === 'a') {
+                    menuItems.push(this.buildCustomMenuItem(menuItems.length, {href: this.props.items[key]}, key, this.props.tagName));
                 } else {
-                    params.onClick = () => this.selectItem(key);
+                    menuItems.push(this.buildCustomMenuItem(menuItems.length, {onClick: () => this.selectItem(key)}, key, this.props.tagName));
                 }
-                menuItems.push(<I18nCustom {...params}/>);
             } else {
-                params.onClick = () => this.selectItem(key);
-                menuItems.push(<I18nText {...params}/>);
+                menuItems.push(this.buildMenuItem(menuItems.length, {onClick: () => this.selectItem(key)}, this.props.items[key]));
             }
         }
 

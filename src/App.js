@@ -88,7 +88,11 @@ class App extends React.Component {
                                     preloadtitle: friendlyName
                                 });
                         }
-                        return <CustomMenu className="Preview-sidebar" items={sidebarItems} tagName="a"/>;
+                        return <CustomMenu
+                            className="Preview-sidebar"
+                            items={sidebarItems}
+                            tagName="a"
+                            headerName="title-add-sections"/>;
                     }
                 }
             },
