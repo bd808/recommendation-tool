@@ -1,0 +1,19 @@
+@import 'base.scss';
+
+.CustomMenu-container {
+  display: flex;
+  flex-direction: column;
+  background-color: $background-color-framed;
+  overflow-y: auto;
+}
+
+.CustomMenu-item {
+  padding: .5rem;
+  line-height: 2rem;
+  flex: 0 1 auto;
+  cursor: pointer;
+}
+
+.CustomMenu-item:hover {
+  background-color: $background-color-framed--active;
+}

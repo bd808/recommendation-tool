@@ -1,5 +1,5 @@
 import React from "react";
-import I18nText from "./I18n";
+import CustomMenu from "./CustomMenu";
 import "./Dropdown.css";
 
 class Dropdown extends React.Component {
@@ -32,16 +32,11 @@ class Dropdown extends React.Component {
         if (this.props.direction === 'up') {
             activeClass += " Dropdown-up";
         }
-        let dropdownItems = [];
-        for (const key of Object.keys(this.props.items)) {
-            dropdownItems.push(<I18nText name={this.props.items[key]} className="Dropdown-item"
-                                         key={key} onClick={() => this.selectItem(key)}/>);
-        }
         return (
             <div className="Dropdown-container" onClick={this.toggleDropdown}>
                 {this.props.children}
                 <div className={activeClass}>
-                    {dropdownItems}
+                    <CustomMenu {...this.props}/>
                 </div>
             </div>
         );

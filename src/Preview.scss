@@ -14,6 +14,7 @@
   display: flex;
   align-items: center;
   height: 2rem;
+  padding: .5rem;
 }
 
 .Preview-title {
@@ -28,31 +29,57 @@
   min-width: 0;
 }
 
-.Preview-button {
-  cursor: pointer;
+.Preview-button, .Preview-button-disabled, .Preview-button-close {
   width: 2rem;
   height: 2rem;
   flex: 0 0 auto;
 }
 
-.Preview-button:hover {
+.Preview-button {
+  cursor: pointer;
+  fill: $color-base;
+}
 
+.Preview-button:hover {
+  fill: $color-base--hover;
+}
+
+.Preview-button-close {
+  cursor: pointer;
+  fill: $color-destructive;
+}
+
+.Preview-button-close:hover {
+  fill: $color-destructive--active;
 }
 
 .Preview-button-disabled {
   cursor: not-allowed;
+  fill: $color-base--disabled;
 }
 
 .Preview-body {
-  flex: 1 0 auto;
+  flex: 1 0 0;
   display: flex;
+  padding: .5rem;
   border-top: $border-base;
   border-bottom: $border-base;
 }
 
+.Preview-iframe-container {
+  flex: 5 0 auto;
+}
+
 .Preview-iframe {
   border: 0;
-  flex: 1 1 auto;
+  height: 100%;
+  width: 100%;
+}
+
+.Preview-sidebar {
+  flex: 1 0 auto;
+  max-width: 20%;
+  word-wrap: break-word;
 }
 
 .Preview-footer {
@@ -61,6 +88,7 @@
   flex-wrap: wrap;
   align-items: center;
   min-height: 2rem;
+  padding: .5rem;
 }
 
 .Preview-footer-left {

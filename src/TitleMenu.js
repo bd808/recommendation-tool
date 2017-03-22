@@ -8,18 +8,10 @@ const menuItems = {
 };
 
 class TitleMenu extends React.Component {
-    onSelect(item) {
-        location.href = menuItems[item];
-    }
-
     render() {
-        let dropdownMap = {};
-        for (const key of Object.keys(menuItems)) {
-            dropdownMap[key] = key;
-        }
         return (
             <div className="Title-float-right">
-                <Dropdown items={dropdownMap} align="right" onSelect={this.onSelect.bind(this)}>
+                <Dropdown items={menuItems} align="right" tagName="a">
                     <MenuImage className="Title-menu-icon"/>
                 </Dropdown>
             </div>

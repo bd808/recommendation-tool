@@ -7,31 +7,23 @@ import NextImage from "./images/NextImage";
 import PreviousImage from "./images/PreviousImage";
 import I18nText from "./I18n";
 import "./Preview.css";
+import CustomMenu from "./CustomMenu";
 
 class Preview extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            previewHtml: ''
+            previewHtml: 'Loading...'
         };
     }
 
     componentDidMount() {
-        this.setState({previewHtml: (
-            <pre>
-                {JSON.stringify(this.props.item, null, 2)}
-            </pre>
-        )});
         this.show(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.index !== this.props.index) {
-            this.setState({previewHtml: (
-                <pre>
-                    {JSON.stringify(nextProps.item, null, 2)}
-                </pre>
-            )});
+            this.setState({previewHtml: 'Loading...'});
             this.show(nextProps);
         }
     }
@@ -121,21 +113,38 @@ class Preview extends React.PureComponent {
     }
 
     render() {
+        let sidebarItems = {};
+        for (const item of this.props.item.sections) {
+            const friendlyName = item.charAt(0) + item.slice(1).toLowerCase();
+            sidebarItems[friendlyName] =
+                "https://en.wikipedia.org/w/index.php?" + encodeParams({
+                    title: this.props.item.title,
+                    action: 'edit',
+                    section: 'new',
+                    preloadtitle: friendlyName
+                });
+        }
         return (
             <div className="Preview">
                 <div className="Preview-header">
                     <div className="Preview-title">
                         {this.props.item.title.replace(/_/g, ' ')}
                     </div>
-                    <CloseImage className="Preview-button" onClick={this.close.bind(this)}/>
+                    <CloseImage className="Preview-button-close" onClick={this.close.bind(this)}/>
                 </div>
                 <div className="Preview-body">
-                    {this.state.previewHtml}
+                    <div className="Preview-iframe-container">
+                        {this.state.previewHtml}
+                    </div>
+                    <CustomMenu
+                        className="Preview-sidebar"
+                        items={sidebarItems}
+                        tagName="a"/>
                 </div>
                 <div className="Preview-footer">
                     <div className="Preview-footer-left">
-                        <PreviousImage className="Preview-button" onClick={this.previous.bind(this)}/>
-                        <NextImage className="Preview-button" onClick={this.next.bind(this)}/>
+                        <PreviousImage className={this.props.index < 1 ? "Preview-button-disabled" : "Preview-button"} onClick={this.previous.bind(this)}/>
+                        <NextImage className={this.props.index < this.props.length - 1 ? "Preview-button" : "Preview-button-disabled"} onClick={this.next.bind(this)}/>
                     </div>
                     <div className="Preview-footer-right">
                     </div>
