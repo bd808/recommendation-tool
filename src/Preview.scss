@@ -35,6 +35,11 @@
   flex: 0 0 auto;
 }
 
+.Preview-button svg, .Preview-button-disabled svg, .Preview-button-close svg {
+  width: 2rem;
+  height: 2rem;
+}
+
 .Preview-button {
   cursor: pointer;
   fill: $color-base;
@@ -59,7 +64,7 @@
 }
 
 .Preview-body {
-  flex: 1 0 0;
+  flex: 1 1 0;
   display: flex;
   border-top: $border-base;
   border-bottom: $border-base;
@@ -67,12 +72,12 @@
 
 .Preview-iframe-container {
   flex: 5 0 auto;
+  display: flex;
 }
 
 .Preview-iframe {
   border: 0;
-  height: 100%;
-  width: 100%;
+  flex: 1 0 auto;
 }
 
 .Preview-sidebar {

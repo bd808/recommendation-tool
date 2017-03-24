@@ -122,7 +122,9 @@ class Preview extends React.PureComponent {
                     <div className="Preview-title">
                         {this.props.item.title.replace(/_/g, ' ')}
                     </div>
-                    <CloseImage className="Preview-button-close" onClick={this.close.bind(this)}/>
+                    <div className="Preview-button-close" onClick={this.close.bind(this)}>
+                        <CloseImage/>
+                    </div>
                 </div>
                 <div className="Preview-body">
                     <div className="Preview-iframe-container">
@@ -132,8 +134,12 @@ class Preview extends React.PureComponent {
                 </div>
                 <div className="Preview-footer">
                     <div className="Preview-footer-left">
-                        <PreviousImage className={this.props.index < 1 ? "Preview-button-disabled" : "Preview-button"} onClick={this.previous.bind(this)}/>
-                        <NextImage className={this.props.index < this.props.length - 1 ? "Preview-button" : "Preview-button-disabled"} onClick={this.next.bind(this)}/>
+                        <div className={this.props.index < 1 ? "Preview-button-disabled" : "Preview-button"} onClick={this.previous.bind(this)}>
+                            <PreviousImage/>
+                        </div>
+                        <div className={this.props.index < this.props.length - 1 ? "Preview-button" : "Preview-button-disabled"} onClick={this.next.bind(this)}>
+                            <NextImage/>
+                        </div>
                     </div>
                     <div className="Preview-footer-right">
                     </div>

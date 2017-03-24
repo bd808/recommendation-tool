@@ -16,6 +16,11 @@
   cursor: pointer;
 }
 
+.Disclaimer-close svg {
+  height: 2rem;
+  width: 2rem;
+}
+
 .Disclaimer-close:hover {
   fill: $color-primary--hover;
 }

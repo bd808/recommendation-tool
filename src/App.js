@@ -147,8 +147,6 @@ class App extends React.Component {
         } else if (this.state.error !== undefined) {
             result = <StatusMessage>{JSON.stringify(this.state.error)}</StatusMessage>;
         } else {
-            console.log(this.state.previewIndex);
-            console.log(this.state.previewIndex >= 0);
             result = (
                 <div>
                     <Recommendations
