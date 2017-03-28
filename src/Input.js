@@ -2,8 +2,7 @@ import React from "react";
 import "whatwg-fetch";
 import TypeSelector from "./TypeSelector";
 import LanguageSelector from "./LanguageSelector";
-import {I18nCustom} from "./I18n";
-import SearchImage from "./images/SearchImage";
+import Search from "./Search";
 import {checkStatus, parseJSON} from './util';
 import "./Input.css";
 
@@ -63,12 +62,12 @@ class Input extends React.Component {
         this.setValueAndSubmit('target', language);
     }
 
-    setSeed(event) {
-        this.setValue('seed', event.target.value);
+    setSeed(value) {
+        this.setValue('seed', value);
     }
 
-    setCategory(event) {
-        this.setValue('category', event.target.value);
+    setCategory(value) {
+        this.setValue('category', value);
     }
 
     setValueAndSubmit(name, value) {
@@ -123,20 +122,12 @@ class Input extends React.Component {
         }
         if (this.hasParameter('seed')) {
             searchBar.push(
-                <div key="seed" className="Input-search-container">
-                    <SearchImage className="Input-search-icon"/>
-                    <I18nCustom onChange={this.setSeed.bind(this)} tagName="input" name="seed-placeholder"
-                                value={this.state.values.seed} attributeName="placeholder" className="Input-search"/>
-                </div>
+                <Search key="seed" placeholderName="seed-placeholder" onChange={this.setSeed.bind(this)}/>
             );
         }
         if (this.hasParameter('category')) {
             searchBar.push(
-                <div key="category" className="Input-search-container">
-                    <SearchImage className="Input-search-icon"/>
-                    <I18nCustom onChange={this.setCategory.bind(this)} tagName="input" name="category-placeholder"
-                                value={this.state.values.category} attributeName="placeholder" className="Input-search"/>
-                </div>
+                <Search key="category" placeholderName="category-placeholder" onChange={this.setCategory.bind(this)}/>
             );
         }
         return (
