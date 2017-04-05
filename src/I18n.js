@@ -26,6 +26,10 @@ class I18n {
     unsubscribe(key) {
         delete this.subscriptions[key];
     }
+
+    i18n(name) {
+        return window.jQuery.i18n(name);
+    }
 }
 
 export class I18nProvider extends React.Component {
@@ -51,7 +55,7 @@ export class I18nProvider extends React.Component {
     }
 
     render() {
-        return <div>{this.props.children}</div>
+        return <div>{this.props.children}</div>;
     }
 }
 I18nProvider.childContextTypes = {
@@ -59,32 +63,12 @@ I18nProvider.childContextTypes = {
 };
 
 export class I18nText extends React.Component {
-    componentDidMount() {
-        this.context.i18n.subscribe(this, () => this.forceUpdate());
-    }
-
-    componentWillUnmount() {
-        this.context.i18n.unsubscribe(this);
-    }
-
-    getText() {
-        return window.jQuery.i18n(this.props.name);
-    }
-
     render() {
-        const text = this.getText();
-        let attributes = {};
-        if (this.props.hasOwnProperty('className')) {
-            attributes.className = this.props.className;
-        }
-        if (this.props.hasOwnProperty('onClick')) {
-            attributes.onClick = this.props.onClick;
-        }
-        return <div {...attributes}>{text}</div>;
+        return <I18nCustom {...this.props}/>;
     }
 }
-I18nText.contextTypes = {
-    i18n: React.PropTypes.object
+I18nText.propTypes = {
+    name: React.PropTypes.string.isRequired
 };
 
 export class I18nCustom extends React.Component {
@@ -96,26 +80,26 @@ export class I18nCustom extends React.Component {
         this.context.i18n.unsubscribe(this);
     }
 
-    getText() {
-        return window.jQuery.i18n(this.props.name);
-    }
-
     render() {
-        const CustomTag = `${this.props.tagName}`;
-        const text = this.getText();
-        let attributes = {};
-        for (const property of ['className', 'onClick', 'onChange', 'value', 'href']) {
-            if (this.props.hasOwnProperty(property)) {
-                attributes[property] = this.props[property];
-            }
+        let {name, tagName, attributeName, ...props} = this.props;
+        const CustomTag = `${tagName}`;
+        const text = this.context.i18n.i18n(name);
+
+        if (attributeName !== undefined) {
+            props[attributeName] = text;
+            return <CustomTag {...props}/>;
         }
-        if (this.props.hasOwnProperty('attributeName')) {
-            attributes[this.props.attributeName] = text;
-            return <CustomTag {...attributes} />;
-        }
-        return <CustomTag {...attributes}>{text}</CustomTag>;
+        return <CustomTag {...props}>{text}</CustomTag>;
     }
 }
+I18nCustom.propTypes = {
+    name: React.PropTypes.string.isRequired,
+    tagName: React.PropTypes.string.isRequired,
+    attributeName: React.PropTypes.string
+};
+I18nCustom.defaultProps = {
+    tagName: 'div'
+};
 I18nCustom.contextTypes = {
     i18n: React.PropTypes.object
 };
