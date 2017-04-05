@@ -15,14 +15,17 @@ class TypeSelector extends React.Component {
     }
 
     render() {
-        let dropdownMap = {};
+        let dropdownItems = [];
         for (const key of Object.keys(this.props.types)) {
-            dropdownMap[key] = this.props.types[key].i18nKey;
+            dropdownItems.push({
+                label: this.props.types[key].i18nKey,
+                value: key
+            });
         }
         return (
-            <Dropdown items={dropdownMap} onSelect={this.onSelect.bind(this)}>
+            <Dropdown items={dropdownItems} onSelect={this.onSelect.bind(this)}>
                 <div className="rt-button">
-                    <I18nText className="rt-selector-text" name={dropdownMap[this.state.currentType]}/>
+                    <I18nText className="rt-selector-text" name={this.props.types[this.state.currentType].i18nKey}/>
                     <SelectorImage />
                 </div>
             </Dropdown>

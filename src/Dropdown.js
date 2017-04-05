@@ -1,27 +1,22 @@
 import React from "react";
-import CustomMenu from "./CustomMenu";
 import "./Dropdown.css";
+import CustomMenu from "./CustomMenu";
 
 class Dropdown extends React.Component {
     constructor(props) {
         super(props);
         this.state = {active: false};
-        this.toggleDropdown = this.toggleDropdown.bind(this);
-    }
-
-    selectItem(item) {
-        this.props.onSelect(item);
     }
 
     toggleDropdown() {
         this.setState(prevState => ({active: !prevState.active}));
     }
 
-    handleClickOutside(evt) {
+    handleClickOutside() {
         this.setState({active: false});
     }
 
-    render() {
+    buildActiveClass() {
         let activeClass = "Dropdown-active";
         if (!this.state.active) {
             activeClass += " Dropdown-invisible";
@@ -32,16 +27,25 @@ class Dropdown extends React.Component {
         if (this.props.direction === 'up') {
             activeClass += " Dropdown-up";
         }
+        return activeClass;
+    }
+
+    render() {
+        const activeClass = this.buildActiveClass();
         return (
-            <div className="Dropdown-container" onClick={this.toggleDropdown}>
+            <div className="Dropdown-container" onClick={this.toggleDropdown.bind(this)}>
                 {this.props.children}
                 <div className={activeClass}>
-                    <CustomMenu {...this.props}/>
+                    <CustomMenu items={this.props.items} onSelect={this.props.onSelect}/>
                 </div>
             </div>
         );
     }
 }
+Dropdown.propTypes = {
+    align: React.PropTypes.oneOf(['left', 'right']).isRequired,
+    direction: React.PropTypes.oneOf(['up', 'down']).isRequired
+};
 Dropdown.defaultProps = {
     align: 'left',
     direction: 'down'

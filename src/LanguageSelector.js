@@ -19,13 +19,16 @@ class LanguageSelector extends React.Component {
     }
 
     render() {
-        let dropdownMap = {};
+        let dropdownItems = [];
         for (const language of this.state.languages) {
-            dropdownMap[language] = window.jQuery.uls.data.getAutonym(language);
+            dropdownItems.push({
+                label: window.jQuery.uls.data.getAutonym(language),
+                value: language
+            });
         }
         const name = this.state.value ? window.jQuery.uls.data.getAutonym(this.state.value) : this.props.name;
         return (
-            <Dropdown items={dropdownMap} onSelect={this.onSelect.bind(this)}>
+            <Dropdown items={dropdownItems} onSelect={this.onSelect.bind(this)} align="right">
                 <div className="rt-button">
                     <I18nText className="rt-selector-text" name={name}/>
                     <ExpandImage />
@@ -34,5 +37,10 @@ class LanguageSelector extends React.Component {
         );
     }
 }
+LanguageSelector.propTypes = {
+    name: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string,
+    onSelect: React.PropTypes.func.isRequired
+};
 
 export default LanguageSelector;

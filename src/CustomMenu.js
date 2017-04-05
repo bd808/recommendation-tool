@@ -3,58 +3,45 @@ import I18nText from "./I18n";
 import "./CustomMenu.css";
 
 class CustomMenu extends React.Component {
-    selectItem(item) {
-        this.props.onSelect(item);
-    }
+    itemFactory(key, item) {
+        let extraAttributes = {};
+        if (this.props.onSelect !== undefined && !item.header) {
+            extraAttributes.onClick = () => this.props.onSelect(item.value);
+        }
 
-    buildCustomMenuItem(key, containerParams, i18nName, tag) {
-        const CustomTag = `${tag}`;
+        let innerClass = 'CustomMenu-item';
+        let outerClass = 'CustomMenu-item-container';
+        if (item.header) {
+            innerClass = 'CustomMenu-header';
+            outerClass = 'CustomMenu-header-container';
+        }
+
         return (
-            <CustomTag key={key} className="CustomMenu-item-container" {...containerParams}>
-                <I18nText className="CustomMenu-item" name={i18nName}/>
-            </CustomTag>
+            <div className={outerClass} key={key} {...extraAttributes}>
+                <I18nText className={innerClass} name={item.label}/>
+            </div>
         );
     }
 
-    buildMenuItem(key, containerParams, i18nName) {
-        return this.buildCustomMenuItem(key, containerParams, i18nName, 'div');
-    }
-
     render() {
-        let menuItems = [];
-
-        if (this.props.hasOwnProperty('headerName')) {
-            menuItems.push(
-                <div key={menuItems.length} className="CustomMenu-header-container">
-                    <I18nText className="CustomMenu-header" name={this.props.headerName}/>
-                </div>
-            );
+        let items = [];
+        for (let item of this.props.items) {
+            items.push(this.itemFactory(items.length, item));
         }
-
-        for (const key of Object.keys(this.props.items)) {
-            if (this.props.tagName) {
-                if (this.props.tagName === 'a') {
-                    menuItems.push(this.buildCustomMenuItem(menuItems.length, {href: this.props.items[key]}, key, this.props.tagName));
-                } else {
-                    menuItems.push(this.buildCustomMenuItem(menuItems.length, {onClick: () => this.selectItem(key)}, key, this.props.tagName));
-                }
-            } else {
-                menuItems.push(this.buildMenuItem(menuItems.length, {onClick: () => this.selectItem(key)}, this.props.items[key]));
-            }
-        }
-
-        let className = "CustomMenu-container ";
-
-        if (this.props.className) {
-            className += this.props.className;
-        }
-
         return (
-            <div className={className}>
-                {menuItems}
+            <div className="CustomMenu-container">
+                {items}
             </div>
         );
     }
 }
+CustomMenu.propTypes = {
+    items: React.PropTypes.arrayOf(React.PropTypes.shape({
+        value: React.PropTypes.string.isRequired,
+        label: React.PropTypes.string.isRequired,
+        header: React.PropTypes.bool
+    })).isRequired,
+    onSelect: React.PropTypes.func
+};
 
 export default CustomMenu;

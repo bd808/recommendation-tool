@@ -72,21 +72,30 @@ const TYPES = {
             return item.sections.length + ' sections to add';
         },
         getPreviewSidebar: (item) => {
-            let sidebarItems = {};
+            let sidebarItems = [];
+            sidebarItems.push({
+                label: "title-add-sections",
+                value: '',
+                header: true
+            });
             for (const section of item.sections) {
                 const friendlyName = section.charAt(0) + section.slice(1).toLowerCase();
-                sidebarItems[friendlyName] = "https://en.wikipedia.org/w/index.php?" + encodeParams({
-                   title: item.title,
-                    action: 'edit',
-                    section: 'new',
-                    preloadtitle: friendlyName
+                const url = "https://en.wikipedia.org/w/index.php?" + encodeParams({
+                        title: item.title,
+                        action: 'edit',
+                        section: 'new',
+                        preloadtitle: friendlyName
+                    });
+                sidebarItems.push({
+                    label: friendlyName,
+                    value: url
                 });
             }
             return <CustomMenu
                 className="Preview-sidebar"
                 items={sidebarItems}
-                tagName="a"
-                headerName="title-add-sections"/>;
+                onSelect={(value) => window.open(value)}
+            />;
         }
     }
 };
