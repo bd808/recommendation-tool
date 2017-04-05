@@ -9,9 +9,9 @@ class Title extends React.Component {
         return (
             <div className="Title-container">
                 <Lightbulb className="Title-icon"/>
-                <span className="Title-display-secondary"><I18nText name='title-wikipedia'/></span>
-                <span className="Title-display-main"><I18nText name={this.props.title}/></span>
-                <span className="Title-display-version"><I18nText name='title-alpha'/></span>
+                <I18nText className="Title-display-secondary" name='title-wikipedia'/>
+                <I18nText className="Title-display-main" name={this.props.title}/>
+                <I18nText className="Title-display-version" name='title-alpha'/>
                 <TitleMenu />
             </div>
         );

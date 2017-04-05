@@ -109,16 +109,24 @@ class App extends React.Component {
         this.setState({language: language});
     }
 
-    setType(newType) {
-        this.setState({recommendationType: newType, recommendations: []});
-    }
-
-    onSubmitInput(values) {
+    resetResult() {
         this.setState({
             recommendations: [],
             previewIndex: -1,
-            recommendationsSourceLanguage: values.hasOwnProperty('source') ? values.source : 'en',
             error: undefined,
+            loading: false
+        });
+    }
+
+    setType(newType) {
+        this.resetResult();
+        this.setState({recommendationType: newType});
+    }
+
+    onSubmitInput(values) {
+        this.resetResult();
+        this.setState({
+            recommendationsSourceLanguage: values.hasOwnProperty('source') ? values.source : 'en',
             loading: true
         });
         const type = TYPES[this.state.recommendationType];
