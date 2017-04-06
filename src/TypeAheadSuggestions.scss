@@ -1,0 +1,65 @@
+@import 'base.scss';
+
+.TypeAheadSuggestions-container {
+  position: absolute;
+  top: 100%;
+  z-index: 1000;
+  background: $background-color-framed;
+  border: $border-base;
+  display: flex;
+  flex-direction: column;
+}
+
+.TypeAheadSuggestions-item {
+  flex: 1 0 auto;
+  height: 3rem;
+  display: flex;
+  cursor: pointer;
+}
+
+.TypeAheadSuggestions-item ~ .TypeAheadSuggestions-item {
+  border-top: $border-base;
+}
+
+.TypeAheadSuggestions-item:hover {
+  background-color: $background-color-framed--active;
+}
+
+.TypeAheadSuggestions-item-thumbnail {
+  width: 4rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: 33%;
+  background-position-x: center;
+  flex: 0 0 auto;
+}
+
+.TypeAheadSuggestions-item-text-container {
+  display: flex;
+  flex: 0 0 auto;
+  width: 28.5rem;
+  padding-left: .25rem;
+  padding-right: .25rem;
+  flex-direction: column;
+}
+
+@media (max-width: 35rem) {
+  .TypeAheadSuggestions-item-text-container {
+    width: 16rem;
+  }
+}
+
+.TypeAheadSuggestions-item-title {
+  flex: 1 0 auto;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.TypeAheadSuggestions-item-description {
+  flex: 1 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

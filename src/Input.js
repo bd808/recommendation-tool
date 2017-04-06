@@ -14,8 +14,7 @@ class Input extends React.Component {
             values: {
                 source: undefined,
                 target: undefined,
-                seed: '',
-                category: ''
+                seed: ''
             }
         };
     }
@@ -66,8 +65,8 @@ class Input extends React.Component {
         this.setValue('seed', value);
     }
 
-    setCategory(value) {
-        this.setValue('category', value);
+    setSeedAndSubmit(value) {
+        this.setValueAndSubmit('seed', value);
     }
 
     setValueAndSubmit(name, value) {
@@ -122,12 +121,12 @@ class Input extends React.Component {
         }
         if (this.hasParameter('seed')) {
             searchBar.push(
-                <Search key="seed" placeholderName="seed-placeholder" onChange={this.setSeed.bind(this)}/>
-            );
-        }
-        if (this.hasParameter('category')) {
-            searchBar.push(
-                <Search key="category" placeholderName="category-placeholder" onChange={this.setCategory.bind(this)}/>
+                <Search
+                    key="seed"
+                    placeholderName="seed-placeholder"
+                    onChange={this.setSeed.bind(this)}
+                    onSubmit={this.setSeedAndSubmit.bind(this)}
+                />
             );
         }
         return (
