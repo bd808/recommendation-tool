@@ -7,7 +7,7 @@ import "./Input.css";
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: '', typeAheadValue: ''};
+        this.state = {value: this.props.value, typeAheadValue: ''};
     }
 
     handleEvent(event) {
@@ -45,6 +45,7 @@ class Search extends React.Component {
     }
 }
 Search.propTypes = {
+    value: React.PropTypes.string.isRequired,
     placeholderName: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func.isRequired

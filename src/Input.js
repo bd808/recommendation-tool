@@ -123,6 +123,7 @@ class Input extends React.Component {
             searchBar.push(
                 <Search
                     key="seed"
+                    value={this.state.values.seed}
                     placeholderName="seed-placeholder"
                     onChange={this.setSeed.bind(this)}
                     onSubmit={this.setSeedAndSubmit.bind(this)}
