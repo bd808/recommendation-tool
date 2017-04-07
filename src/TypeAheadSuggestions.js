@@ -11,14 +11,20 @@ class TypeAheadSuggestions extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.seed === ''){
+            clearTimeout(this.fetchTimer);
             this.setState({suggestions: []});
         }else if(this.props.seed !== nextProps.seed) {
-            this.fetchSuggestions(nextProps.seed);
+            this.requestFetch(nextProps.seed);
         }
     }
 
     handleClickOutside() {
         this.setState({suggestions: []});
+    }
+
+    requestFetch(seed) {
+        clearTimeout(this.fetchTimer);
+        this.fetchTimer = setTimeout(this.fetchSuggestions.bind(this), 50, seed);
     }
 
     fetchSuggestions(seed) {
@@ -48,13 +54,15 @@ class TypeAheadSuggestions extends React.Component {
         let suggestions = [];
         const lines = require('./images/lines.svg');
         const defaultThumbnail = `url(${lines})`;
-        for(const key of Object.keys(data.query.pages)){
-            const rawSuggestion = data.query.pages[key];
-            suggestions.push({
-                title: rawSuggestion.title,
-                thumbnail: rawSuggestion.thumbnail ? `url(${rawSuggestion.thumbnail.source})` : defaultThumbnail,
-                description: rawSuggestion.terms ? rawSuggestion.terms.description[0] : undefined
-            })
+        if(data.query && data.query.pages) {
+            for (const key of Object.keys(data.query.pages)) {
+                const rawSuggestion = data.query.pages[key];
+                suggestions.push({
+                    title: rawSuggestion.title,
+                    thumbnail: rawSuggestion.thumbnail ? `url(${rawSuggestion.thumbnail.source})` : defaultThumbnail,
+                    description: rawSuggestion.terms ? rawSuggestion.terms.description[0] : undefined
+                })
+            }
         }
         this.setState({suggestions: suggestions});
     }
@@ -78,7 +86,7 @@ class TypeAheadSuggestions extends React.Component {
             );
         }
         return (
-            <div className="TypeAheadSuggestions-container">
+            <div className={suggestionItems.length > 0 ? 'TypeAheadSuggestions-container' : 'TypeAheadSuggestions-invisible'}>
                 {suggestionItems}
             </div>
         );
