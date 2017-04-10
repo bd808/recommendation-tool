@@ -1,7 +1,6 @@
 import React from "react";
 import 'whatwg-fetch';
 import {checkStatus, parseJSON} from './util';
-import {TYPE_PROPS} from "./App";
 import './Recommendations.css';
 
 class Recommendations extends React.Component {
@@ -73,7 +72,7 @@ class Recommendations extends React.Component {
         for (const index of Object.keys(this.state.items)) {
             const item = this.state.items[index];
             items.push(
-                <div key={index} className="Recommendations-item" onClick={() => this.props.showPreview(index)}>
+                <div key={index} className="Recommendations-item" onClick={() => this.props.showPreview(+index)}>
                     <div className="Recommendations-image" style={{backgroundImage: item.thumbnail}}>
                     </div>
                     <div className="Recommendations-body">
@@ -110,7 +109,7 @@ Recommendations.propTypes = {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
         title: React.PropTypes.string.isRequired
     })).isRequired,
-    type: TYPE_PROPS.isRequired
+    type: React.PropTypes.object.isRequired
 };
 
 export default Recommendations;
