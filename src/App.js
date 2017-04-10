@@ -12,7 +12,19 @@ import Preview from "./Preview";
 import {checkStatus, parseJSON, encodeParams} from './util';
 import "./Modal.css";
 
-const TYPES = {
+export const TYPE_PROPS = React.PropTypes.shape({
+    appTitle: React.PropTypes.string.isRequired,
+    i18nKey: React.PropTypes.string.isRequired,
+    endpoint: React.PropTypes.string.isRequired,
+    specPath: React.PropTypes.string.isRequired,
+    queryPath: React.PropTypes.string.isRequired,
+    motivation: React.PropTypes.func.isRequired,
+    restrictInput: React.PropTypes.arrayOf(React.PropTypes.string),
+    urlParamsBuilder: React.PropTypes.func,
+    submitOnLoad: React.PropTypes.bool,
+    getPreviewSidebar: React.PropTypes.func
+});
+export const TYPES = {
     /**
      * Each recommendation type should have an object here
      * with values describing it of the form:

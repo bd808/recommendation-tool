@@ -1,6 +1,7 @@
 import React from "react";
 import 'whatwg-fetch';
 import {checkStatus, parseJSON} from './util';
+import {TYPE_PROPS} from "./App";
 import './Recommendations.css';
 
 class Recommendations extends React.Component {
@@ -21,35 +22,36 @@ class Recommendations extends React.Component {
 
     updateInfo(incomingItems) {
         this.setState({items: {}});
-        for (const item of incomingItems) {
-            this.setItemValue(item.title, 'raw_item', item);
-            this.getData(item.title);
+        for (let i=0; i<incomingItems.length; i++) {
+            this.setItemValue(i, 'raw_item', incomingItems[i]);
+            this.setItemValue(i, 'title', incomingItems[i].title);
+            this.getData(i, incomingItems[i].title);
         }
     }
 
-    setItemValue(title, key, value) {
+    setItemValue(index, key, value) {
         this.setState((prevState, props) => {
             let items = prevState.items;
 
-            if (!items.hasOwnProperty(title)) {
-                items[title] = {};
+            if (!items.hasOwnProperty(index)) {
+                items[index] = {};
             }
-            items[title][key] = value;
+            items[index][key] = value;
 
             return {items: items};
         });
     }
 
-    getData(title) {
+    getData(index, title) {
         const query = 'https://{source}.wikipedia.org/api/rest_v1/page/mobile-sections-lead/';
         const url = query.replace('{source}', this.props.source) + encodeURIComponent(title);
         fetch(url)
             .then(checkStatus)
             .then(parseJSON)
-            .then((data) => this.setData.bind(this)(data, title));
+            .then((data) => this.setData.bind(this)(data, index));
     }
 
-    setData(data, title) {
+    setData(data, index) {
         const description = data.description;
         const lines = require('./images/lines.svg');
         let thumbnail = `url(${lines})`;
@@ -62,15 +64,14 @@ class Recommendations extends React.Component {
             }
         }
 
-        this.setItemValue(title, 'thumbnail', thumbnail);
-        this.setItemValue(title, 'description', description);
+        this.setItemValue(index, 'thumbnail', thumbnail);
+        this.setItemValue(index, 'description', description);
     }
 
     render() {
         let items = [];
-        for (const title of Object.keys(this.state.items)) {
-            const item = this.state.items[title];
-            const index = items.length;
+        for (const index of Object.keys(this.state.items)) {
+            const item = this.state.items[index];
             items.push(
                 <div key={index} className="Recommendations-item" onClick={() => this.props.showPreview(index)}>
                     <div className="Recommendations-image" style={{backgroundImage: item.thumbnail}}>
@@ -78,10 +79,10 @@ class Recommendations extends React.Component {
                     <div className="Recommendations-body">
                         <div className="Recommendations-title-container">
                             <div className="Recommendations-title">
-                                {title.replace(/_/g, ' ')}
+                                {item.title.replace(/_/g, ' ')}
                             </div>
                             <div className="Recommendations-title-expand">
-                                {title.replace(/_/g, ' ')}
+                                {item.title.replace(/_/g, ' ')}
                             </div>
                         </div>
                         <div className="Recommendations-description">
@@ -103,5 +104,13 @@ class Recommendations extends React.Component {
         );
     }
 }
+Recommendations.propTypes = {
+    showPreview: React.PropTypes.func.isRequired,
+    source: React.PropTypes.string.isRequired,
+    items: React.PropTypes.arrayOf(React.PropTypes.shape({
+        title: React.PropTypes.string.isRequired
+    })).isRequired,
+    type: TYPE_PROPS.isRequired
+};
 
 export default Recommendations;
