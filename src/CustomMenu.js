@@ -26,7 +26,11 @@ class CustomMenu extends React.Component {
     render() {
         let items = [];
         for (let item of this.props.items) {
-            items.push(this.itemFactory(items.length, item));
+            if (this.props.itemFactory !== undefined) {
+                items.push(this.props.itemFactory(items.length, item));
+            } else {
+                items.push(this.itemFactory(items.length, item));
+            }
         }
         return (
             <div className="CustomMenu-container">
@@ -41,7 +45,8 @@ CustomMenu.propTypes = {
         label: React.PropTypes.string.isRequired,
         header: React.PropTypes.bool
     })).isRequired,
-    onSelect: React.PropTypes.func
+    onSelect: React.PropTypes.func,
+    itemFactory: React.PropTypes.func
 };
 
 export default CustomMenu;

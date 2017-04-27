@@ -36,7 +36,11 @@ class Dropdown extends React.Component {
             <div className="Dropdown-container" onClick={this.toggleDropdown.bind(this)}>
                 {this.props.children}
                 <div className={activeClass}>
-                    <CustomMenu items={this.props.items} onSelect={this.props.onSelect}/>
+                    <CustomMenu
+                        items={this.props.items}
+                        onSelect={this.props.onSelect}
+                        itemFactory={this.props.itemFactory}
+                    />
                 </div>
             </div>
         );

@@ -1,6 +1,6 @@
 import React from "react";
 import Recommendations from "./Recommendations";
-import {TYPES} from "./App";
+import {TYPES} from "./Type";
 
 const items = [
     {"title": "1", "sections": ["EVOLUTION OF THE GLYPH", "IN RELIGION", "IN MATHEMATICS"]},

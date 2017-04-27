@@ -1,17 +1,18 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import Dropdown from "./Dropdown";
 import I18nText from "./I18n";
 import SelectorImage from "./images/SelectorImage";
 
 class TypeSelector extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {currentType: this.props.type};
-    }
-
-    onSelect(type) {
-        this.setState({currentType: type});
-        this.props.onSetType(type);
+    itemFactory(key, item) {
+        return (
+            <Link key={key} to={`/${item.value}`}>
+                <div className="CustomMenu-item-container">
+                    <I18nText className="CustomMenu-item" name={item.label}/>
+                </div>
+            </Link>
+        );
     }
 
     render() {
@@ -23,9 +24,9 @@ class TypeSelector extends React.Component {
             });
         }
         return (
-            <Dropdown items={dropdownItems} onSelect={this.onSelect.bind(this)}>
+            <Dropdown items={dropdownItems} itemFactory={this.itemFactory.bind(this)}>
                 <div className="rt-button">
-                    <I18nText className="rt-selector-text" name={this.props.types[this.state.currentType].i18nKey}/>
+                    <I18nText className="rt-selector-text" name={this.props.types[this.props.type].i18nKey}/>
                     <SelectorImage />
                 </div>
             </Dropdown>
