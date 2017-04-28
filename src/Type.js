@@ -12,48 +12,38 @@ import {checkStatus, parseJSON, encodeParams} from './util';
 import "./Modal.css";
 
 /**
- export const TYPE_PROPS = React.PropTypes.shape({
-    appTitle: React.PropTypes.string.isRequired,
-    i18nKey: React.PropTypes.string.isRequired,
-    endpoint: React.PropTypes.string.isRequired,
-    specPath: React.PropTypes.string.isRequired,
-    queryPath: React.PropTypes.string.isRequired,
-    motivation: React.PropTypes.func.isRequired,
-    restrictInput: React.PropTypes.arrayOf(React.PropTypes.string),
-    urlParamsBuilder: React.PropTypes.func,
-    submitOnLoad: React.PropTypes.bool,
-    getPreviewSidebar: React.PropTypes.func
-});*/
+ * Each recommendation type should have an object here
+ * with values describing it of the form:
+ *
+ * <type name>: {
+ *     appTitle: <i18n key (or a raw value) for the app to take when this type is selected>,
+ *     i18nKey: <i18n key for the recommendation type itself>,
+ *     version: <i18n key for the version>,
+ *     endpoint: <endpoint for the recommendation type>,
+ *     specPath: <path, starting at the endpoint, to get the swagger spec>,
+ *     queryPath: <path, starting at the endpoint, to send requests to get recommendations from>,
+ *     motivation: <function that takes an item and returns a motivation value to be placed in
+ *                  the footer of the recommendation card>,
+ *
+ *     ******** the following values are optional ********
+ *
+ *     restrictInput: <Array of values that will be used by Input to generate input fields;
+ *                     only input params that are present in both the spec and this array will
+ *                     be presented to the user>,
+ *     urlParamsBuilder: <function that takes the params generated from Input and can make
+ *                        modifications before they are used to query for recommendations>,
+ *     submitOnLoad: <boolean that will submit a query when the type loads if true,
+ *                    but defaults to false>,
+ *     getPreviewSidebar: <function that returns a sidebar to place next to the article preview>
+ * }
+ *
+ */
+
 export const TYPES = {
-    /**
-     * Each recommendation type should have an object here
-     * with values describing it of the form:
-     *
-     * <type name>: {
-     *     appTitle: <i18n key (or a raw value) for the app to take when this type is selected>,
-     *     i18nKey: <i18n key for the recommendation type itself>,
-     *     endpoint: <endpoint for the recommendation type>,
-     *     specPath: <path, starting at the endpoint, to get the swagger spec>,
-     *     queryPath: <path, starting at the endpoint, to send requests to get recommendations from>,
-     *     motivation: <function that takes an item and returns a motivation value to be placed in
-     *                  the footer of the recommendation card>,
-     *
-     *     ******** the following values are optional ********
-     *
-     *     restrictInput: <Array of values that will be used by Input to generate input fields;
-     *                     only input params that are present in both the spec and this array will
-     *                     be presented to the user>,
-     *     urlParamsBuilder: <function that takes the params generated from Input and can make
-     *                        modifications before they are used to query for recommendations>,
-     *     submitOnLoad: <boolean that will submit a query when the type loads if true,
-     *                    but defaults to false>,
-     *     getPreviewSidebar: <function that returns a sidebar to place next to the article preview>
-     * }
-     *
-     */
     translation: {
         appTitle: 'title-gapfinder',
         i18nKey: 'title-translation',
+        version: 'title-alpha',
         endpoint: 'https://recommend.wmflabs.org/types/translation',
         specPath: '/spec',
         queryPath: '/v1/articles',
@@ -63,19 +53,14 @@ export const TYPES = {
             }
             return encodeParams(params);
         },
-        motivation: () => ''
-    },
-    related_articles: {
-        appTitle: 'title-readmore',
-        i18nKey: 'title-related-articles',
-        endpoint: 'https://recommend-related-articles.wmflabs.org/types/related_articles',
-        specPath: '/spec',
-        queryPath: '/v1/articles',
-        motivation: () => ''
+        motivation: (item) => {
+            return item.pageviews + ' recent views';
+        }
     },
     missing_sections: {
         appTitle: 'title-gapfinder',
         i18nKey: 'title-missing-sections',
+        version: 'title-alpha',
         endpoint: 'https://recommend-missing-sections.wmflabs.org/types/missing_sections',
         specPath: '/spec',
         queryPath: '/v1/articles',
@@ -109,6 +94,15 @@ export const TYPES = {
                 onSelect={(value) => window.open(value)}
             />;
         }
+    },
+    related_articles: {
+        appTitle: 'title-readmore',
+        i18nKey: 'title-related-articles',
+        version: 'title-alpha',
+        endpoint: 'https://recommend-related-articles.wmflabs.org/types/related_articles',
+        specPath: '/spec',
+        queryPath: '/v1/articles',
+        motivation: () => ''
     }
 };
 
@@ -181,27 +175,37 @@ class Type extends React.Component {
                         items={this.state.recommendations}
                         source={this.state.recommendationsSourceLanguage}
                         type={TYPES[this.props.match.params.type]}
-                        showPreview={this.showPreview.bind(this)}/>
+                        showPreview={this.showPreview.bind(this)}
+                    />
                     <Modal
                         isOpen={this.state.previewIndex >= 0}
                         onRequestClose={this.showPreview.bind(this, -1)}
                         contentLabel=""
-                        className="Modal">
+                        className="Modal"
+                    >
                         <Preview
                             item={this.state.recommendations[this.state.previewIndex]}
                             type={TYPES[this.props.match.params.type]}
                             index={this.state.previewIndex}
                             length={this.state.recommendations.length}
                             source={this.state.recommendationsSourceLanguage}
-                            changeIndex={this.showPreview.bind(this)}/>
+                            changeIndex={this.showPreview.bind(this)}
+                        />
                     </Modal>
                 </div>
             );
         }
         return (
             <div>
-                <Title title={TYPES[this.props.match.params.type].appTitle}/>
-                <Input types={TYPES} type={this.props.match.params.type} onSubmit={this.onSubmitInput.bind(this)}/>
+                <Title
+                    title={TYPES[this.props.match.params.type].appTitle}
+                    version={TYPES[this.props.match.params.type].version}
+                />
+                <Input
+                    types={TYPES}
+                    type={this.props.match.params.type}
+                    onSubmit={this.onSubmitInput.bind(this)}
+                />
                 {result}
             </div>
         )

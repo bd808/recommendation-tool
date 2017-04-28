@@ -11,7 +11,7 @@ class Title extends React.Component {
                 <Lightbulb className="Title-icon"/>
                 <I18nText className="Title-display-secondary" name='title-wikipedia'/>
                 <I18nText className="Title-display-main" name={this.props.title}/>
-                <I18nText className="Title-display-version" name='title-alpha'/>
+                <I18nText className="Title-display-version" name={this.props.version}/>
                 <TitleMenu />
             </div>
         );

@@ -8,6 +8,10 @@
   margin: 1rem 1rem 0 1rem;
 }
 
+.Input-container > div ~ div {
+  margin-left: 1rem;
+}
+
 .Input-search-container {
   display: flex;
   align-items: center;
