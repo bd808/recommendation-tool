@@ -103,6 +103,17 @@ export const TYPES = {
         specPath: '/spec',
         queryPath: '/v1/articles',
         motivation: () => ''
+    },
+    translation_test: {
+        appTitle: 'title-gapfinder',
+        i18nKey: 'translation test',
+        version: 'development test',
+        endpoint: 'https://recommend-missing-sections.wmflabs.org/types/translation_test',
+        specPath: '/spec',
+        queryPath: '/v1/items',
+        motivation: (item) => {
+            return 'Prediction: ' + item.prediction;
+        }
     }
 };
 
