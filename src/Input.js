@@ -113,10 +113,12 @@ class Input extends React.Component {
                                       onSetType={this.props.onSetType}/>);
         if (this.hasParameter('source')) {
             parameters.push(<LanguageSelector key="source" value={this.state.values.source} name="selector-source"
+                                              languages={this.props.types[this.props.type].languages}
                                               onSelect={this.setSource.bind(this)}/>);
         }
         if (this.hasParameter('target')) {
             parameters.push(<LanguageSelector key="target" value={this.state.values.target} name="selector-target"
+                                              languages={this.props.types[this.props.type].languages}
                                               onSelect={this.setTarget.bind(this)}/>);
         }
         if (this.hasParameter('seed')) {

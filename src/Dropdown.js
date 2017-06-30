@@ -40,6 +40,7 @@ class Dropdown extends React.Component {
                         items={this.props.items}
                         onSelect={this.props.onSelect}
                         itemFactory={this.props.itemFactory}
+                        className={this.props.className}
                     />
                 </div>
             </div>

@@ -1,0 +1,28 @@
+@import 'base.scss';
+
+.LanguageSelector-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: $background-color-framed;
+  overflow-y: auto;
+  width: 40rem;
+}
+
+.LanguageSelector-item-container {
+  padding: .2rem;
+  flex: 0 0 auto;
+  display: flex;
+  min-height: 1rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.LanguageSelector-item-container:hover {
+  background-color: $background-color-framed--active;
+}
+
+.LanguageSelector-item {
+  flex: 0 1 auto;
+  font-size: .8rem;
+}

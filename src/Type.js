@@ -113,7 +113,11 @@ export const TYPES = {
         queryPath: '/v1/items',
         motivation: (item) => {
             return 'Prediction: ' + item.prediction;
-        }
+        },
+        languages: [
+            'en', 'hz', 'mus', 'kr', 'ii', 'de', 'fr', 'ru', 'it', 'es', 'ja', 'pl', 'zh', 'pt', 'vec', 'nl', 'sah',
+            'vls', 'kv', 'wuu'
+        ]
     }
 };
 

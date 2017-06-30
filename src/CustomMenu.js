@@ -33,7 +33,7 @@ class CustomMenu extends React.Component {
             }
         }
         return (
-            <div className="CustomMenu-container">
+            <div className={this.props.className || "CustomMenu-container"}>
                 {items}
             </div>
         );
