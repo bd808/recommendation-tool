@@ -61,7 +61,7 @@ export const TYPES = {
         appTitle: 'title-gapfinder',
         i18nKey: 'title-missing-sections',
         version: 'title-alpha',
-        endpoint: 'https://recommend-missing-sections.wmflabs.org/types/missing_sections',
+        endpoint: 'https://recommend-experimental.wmflabs.org/types/missing_sections',
         specPath: '/spec',
         queryPath: '/v1/articles',
         submitOnLoad: true,
@@ -108,15 +108,30 @@ export const TYPES = {
         appTitle: 'title-gapfinder',
         i18nKey: 'translation test',
         version: 'development test',
-        endpoint: 'https://recommend-missing-sections.wmflabs.org/types/translation_test',
+        endpoint: 'https://recommend-experimental.wmflabs.org/types/translation_test',
         specPath: '/spec',
         queryPath: '/v1/items',
         motivation: (item) => {
             return 'Prediction: ' + item.prediction;
         },
         languages: [
-            'en', 'hz', 'mus', 'kr', 'ii', 'de', 'fr', 'ru', 'it', 'es', 'ja', 'pl', 'zh', 'pt', 'vec', 'nl', 'sah',
-            'vls', 'kv', 'wuu'
+            'aa', 'ab', 'ace', 'ady', 'af', 'ak', 'als', 'am', 'ang', 'an', 'arc', 'ar', 'arz', 'ast', 'as', 'av', 'ay',
+            'azb', 'az', 'bar', 'ba', 'bcl', 'be', 'bg', 'bh', 'bi', 'bjn', 'bm', 'bn', 'bo', 'bpy', 'br', 'bs', 'bug',
+            'bxr', 'ca', 'cdo', 'ceb', 'ce', 'cho', 'chr', 'ch', 'chy', 'ckb', 'co', 'crh', 'cr', 'csb', 'cs', 'cu',
+            'cv', 'cy', 'da', 'de', 'diq', 'dsb', 'dty', 'dv', 'dz', 'ee', 'el', 'eml', 'en', 'eo', 'es', 'et', 'eu',
+            'ext', 'fa', 'ff', 'fi', 'fj', 'fo', 'frp', 'frr', 'fr', 'fur', 'fy', 'gag', 'gan', 'ga', 'gd', 'glk', 'gl',
+            'gn', 'gom', 'got', 'gu', 'gv', 'hak', 'ha', 'haw', 'he', 'hif', 'hi', 'ho', 'hr', 'hsb', 'ht', 'hu', 'hy',
+            'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'ilo', 'io', 'is', 'it', 'iu', 'jam', 'ja', 'jbo', 'jv', 'kaa',
+            'kab', 'ka', 'kbd', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'koi', 'ko', 'krc', 'kr', 'ksh', 'ks', 'ku',
+            'kv', 'kw', 'ky', 'lad', 'la', 'lbe', 'lb', 'lez', 'lg', 'lij', 'li', 'lmo', 'ln', 'lo', 'lrc', 'ltg', 'lt',
+            'lv', 'mai', 'mdf', 'mg', 'mhr', 'mh', 'min', 'mi', 'mk', 'ml', 'mn', 'mo', 'mrj', 'mr', 'ms', 'mt', 'mus',
+            'mwl', 'myv', 'my', 'mzn', 'nah', 'nap', 'na', 'nds', 'ne', 'new', 'ng', 'nl', 'nn', 'nov', 'no', 'nrm',
+            'nso', 'nv', 'ny', 'oc', 'olo', 'om', 'or', 'os', 'pag', 'pam', 'pap', 'pa', 'pcd', 'pdc', 'pfl', 'pih',
+            'pi', 'pl', 'pms', 'pnb', 'pnt', 'ps', 'pt', 'qu', 'rm', 'rmy', 'rn', 'ro', 'rue', 'ru', 'rw', 'sah', 'sa',
+            'scn', 'sco', 'sc', 'sd', 'se', 'sg', 'sh', 'simple', 'si', 'sk', 'sl', 'sm', 'sn', 'so', 'sq', 'srn', 'sr',
+            'ss', 'stq', 'st', 'su', 'sv', 'sw', 'szl', 'ta', 'tcy', 'tet', 'te', 'tg', 'th', 'ti', 'tk', 'tl', 'tn',
+            'to', 'tpi', 'tr', 'ts', 'tt', 'tum', 'tw', 'tyv', 'ty', 'udm', 'ug', 'uk', 'ur', 'uz', 'vec', 'vep', 've',
+            'vi', 'vls', 'vo', 'war', 'wa', 'wo', 'wuu', 'xal', 'xh', 'xmf', 'yi', 'yo', 'za', 'zea', 'zh', 'zuwiki'
         ]
     }
 };
