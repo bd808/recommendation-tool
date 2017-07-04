@@ -61,7 +61,7 @@ export const TYPES = {
         appTitle: 'title-gapfinder',
         i18nKey: 'title-missing-sections',
         version: 'title-alpha',
-        endpoint: 'https://recommend-experimental.wmflabs.org/types/missing_sections',
+        endpoint: 'https://recommend-missing-sections.wmflabs.org/types/missing_sections',
         specPath: '/spec',
         queryPath: '/v1/articles',
         submitOnLoad: true,
