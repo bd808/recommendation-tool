@@ -23,7 +23,7 @@
 
 .Recommendations-image {
   width: 100%;
-  height: 8rem;
+  height: 12rem;
   border: none;
   background-size: cover;
   background-repeat: no-repeat;
@@ -45,6 +45,7 @@
   display: flex;
   align-items: flex-end;
   margin-left: .1rem;
+  padding-top: .4rem;
 }
 
 .Recommendations-title-container {
@@ -72,7 +73,7 @@
 }
 
 .Recommendations-title-container:hover .Recommendations-title {
-  display: none
+  display: none;
 }
 
 .Recommendations-description {
