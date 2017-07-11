@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "jquery": "^3.1.1",
-    "jquery.i18n": "github:wikimedia/jquery.i18n",
-    "jquery.uls": "github:wikimedia/jquery.uls",
+    "jquery.i18n": "wikimedia/jquery.i18n",
+    "jquery.uls": "wikimedia/jquery.uls",
     "query-string": "^4.3.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
