@@ -1,7 +1,9 @@
 import React from "react";
 import "react-modal";
 import "whatwg-fetch";
-import {checkStatus, parseJSON, encodeParams, isSrcDocSupported} from "./util";
+import {checkStatus, encodeParams, isSrcDocSupported, parseJSON} from "./util";
+import WikidataImage from "./images/WikidataImage";
+import NewWindowImage from "./images/NewWindowImage";
 import CloseImage from "./images/CloseImage";
 import NextImage from "./images/NextImage";
 import PreviousImage from "./images/PreviousImage";
@@ -52,8 +54,7 @@ class Preview extends React.PureComponent {
             || !data['parse']['text'].hasOwnProperty('*')
             || !data['parse'].hasOwnProperty('headhtml')
             || !data['parse']['headhtml'].hasOwnProperty('*')
-            || !data['parse'].hasOwnProperty('title'))
-        {
+            || !data['parse'].hasOwnProperty('title')) {
             return Promise.reject.bind(Promise);
         } else {
             return data;
@@ -80,7 +81,8 @@ class Preview extends React.PureComponent {
             // iframe.contentWindow.location = jsUrl;
             result = (
                 // eslint-disable-next-line
-                <iframe className="Preview-iframe" srcDoc={value} src="javascript: window.frameElement.getAttribute('srcdoc');"></iframe>
+                <iframe className="Preview-iframe" srcDoc={value}
+                        src="javascript: window.frameElement.getAttribute('srcdoc');"></iframe>
             );
         } else {
             result = (
@@ -106,7 +108,7 @@ class Preview extends React.PureComponent {
             this.props.changeIndex(this.props.index - 1);
         }
     }
-    
+
     close() {
         this.props.changeIndex(-1);
     }
@@ -116,11 +118,31 @@ class Preview extends React.PureComponent {
         if (this.props.type.hasOwnProperty('getPreviewSidebar')) {
             sidebar = this.props.type.getPreviewSidebar(this.props.item);
         }
+        let articleUrl = 'https://' + this.props.source + '.wikipedia.org/wiki/'
+            + encodeURIComponent(this.props.item.title);
+        let wikidataId = '';
+        if (this.props.item.hasOwnProperty('id')) {
+            wikidataId = this.props.item.id;
+        } else if (this.props.item.hasOwnProperty('wikidata_id')) {
+            wikidataId = this.props.item.wikidata_id;
+        }
+        let wikidataButton = null;
+        if (wikidataId) {
+            wikidataButton =
+                <div className="Preview-button"
+                     onClick={() => window.open("https://www.wikidata.org/wiki/" + wikidataId)}>
+                    <WikidataImage/>
+                </div>
+        }
         return (
             <div className="Preview">
                 <div className="Preview-header">
                     <div className="Preview-title">
                         {this.props.item.title.replace(/_/g, ' ')}
+                    </div>
+                    {wikidataButton}
+                    <div className="Preview-button" onClick={() => window.open(articleUrl)}>
+                        <NewWindowImage/>
                     </div>
                     <div className="Preview-button-close" onClick={this.close.bind(this)}>
                         <CloseImage/>
@@ -134,10 +156,13 @@ class Preview extends React.PureComponent {
                 </div>
                 <div className="Preview-footer">
                     <div className="Preview-footer-left">
-                        <div className={this.props.index < 1 ? "Preview-button-disabled" : "Preview-button"} onClick={this.previous.bind(this)}>
+                        <div className={this.props.index < 1 ? "Preview-button-disabled" : "Preview-button"}
+                             onClick={this.previous.bind(this)}>
                             <PreviousImage/>
                         </div>
-                        <div className={this.props.index < this.props.length - 1 ? "Preview-button" : "Preview-button-disabled"} onClick={this.next.bind(this)}>
+                        <div
+                            className={this.props.index < this.props.length - 1 ? "Preview-button" : "Preview-button-disabled"}
+                            onClick={this.next.bind(this)}>
                             <NextImage/>
                         </div>
                     </div>
