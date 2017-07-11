@@ -1,5 +1,6 @@
 import React from "react";
 import "whatwg-fetch";
+import queryString from "query-string";
 import Modal from "react-modal";
 import {I18nText} from "./I18n";
 import Title from "./Title";
@@ -193,6 +194,7 @@ class Type extends React.Component {
     }
 
     render() {
+        let parameters = queryString.parse(this.props.location.search);
         let result = '';
         if (this.state.loading === true) {
             result = <StatusMessage><I18nText name="status-preparing"/></StatusMessage>;
@@ -234,6 +236,7 @@ class Type extends React.Component {
                 <Input
                     types={TYPES}
                     type={this.props.match.params.type}
+                    params={parameters}
                     onSubmit={this.onSubmitInput.bind(this)}
                 />
                 {result}

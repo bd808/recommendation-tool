@@ -12,9 +12,9 @@ class Input extends React.Component {
         this.state = {
             spec: [],
             values: {
-                source: undefined,
-                target: undefined,
-                seed: ''
+                source: props.params.source || undefined,
+                target: props.params.target || undefined,
+                seed: props.params.seed || ''
             }
         };
     }
@@ -110,7 +110,7 @@ class Input extends React.Component {
         let parameters = [];
         let searchBar = [];
         parameters.push(<TypeSelector key="type-selector" types={this.props.types} type={this.props.type}
-                                      onSetType={this.props.onSetType}/>);
+                                      params={this.props.params} onSetType={this.props.onSetType}/>);
         if (this.hasParameter('source')) {
             parameters.push(<LanguageSelector key="source" value={this.state.values.source} name="selector-source"
                                               languages={this.props.types[this.props.type].languages}
@@ -121,6 +121,9 @@ class Input extends React.Component {
                                               languages={this.props.types[this.props.type].languages}
                                               onSelect={this.setTarget.bind(this)}/>);
         }
+        parameters.push(<div className="rt-button" onClick={this.submitInput.bind(this)}>
+            Submit
+        </div>);
         if (this.hasParameter('seed')) {
             searchBar.push(
                 <Search
