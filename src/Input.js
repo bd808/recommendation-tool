@@ -121,8 +121,8 @@ class Input extends React.Component {
                                               languages={this.props.types[this.props.type].languages}
                                               onSelect={this.setTarget.bind(this)}/>);
         }
-        parameters.push(<div className="rt-button" onClick={this.submitInput.bind(this)}>
-            Submit
+        parameters.push(<div key="search" className="rt-button-primary" onClick={this.submitInput.bind(this)}>
+            Search
         </div>);
         if (this.hasParameter('seed')) {
             searchBar.push(
