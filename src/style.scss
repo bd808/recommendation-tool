@@ -17,7 +17,7 @@ a:hover {
   text-decoration: underline;
 }
 
-.rt-button {
+.rt-button, .rt-button-primary {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -29,6 +29,17 @@ a:hover {
 
 .rt-button:hover {
   border-color: $border-color-base--active;
+}
+
+.rt-button-primary {
+  background-color: $color-primary;
+  border-color: $color-primary;
+  color: $color-base--inverted;
+}
+
+.rt-button-primary:hover {
+  background-color: $color-primary--active;
+  border-color: $color-primary--active;
 }
 
 .rt-selector-container {

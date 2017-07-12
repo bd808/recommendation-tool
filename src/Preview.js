@@ -81,8 +81,7 @@ class Preview extends React.PureComponent {
             // iframe.contentWindow.location = jsUrl;
             result = (
                 // eslint-disable-next-line
-                <iframe className="Preview-iframe" srcDoc={value}
-                        src="javascript: window.frameElement.getAttribute('srcdoc');"></iframe>
+                <iframe className="Preview-iframe" srcDoc={value} src="javascript: window.frameElement.getAttribute('srcdoc');"></iframe>
             );
         } else {
             result = (
@@ -167,6 +166,7 @@ class Preview extends React.PureComponent {
                         </div>
                     </div>
                     <div className="Preview-footer-right">
+                        {this.props.type.previewAction(this.props.item, this.props.params)}
                     </div>
                 </div>
             </div>

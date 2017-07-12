@@ -11,6 +11,7 @@ import Preview from "./Preview";
 import CustomMenu from "./CustomMenu";
 import {checkStatus, parseJSON, encodeParams} from './util';
 import "./Modal.css";
+import "./style.css";
 
 /**
  * Each recommendation type should have an object here
@@ -25,6 +26,8 @@ import "./Modal.css";
  *     queryPath: <path, starting at the endpoint, to send requests to get recommendations from>,
  *     motivation: <function that takes an item and returns a motivation value to be placed in
  *                  the footer of the recommendation card>,
+ *     previewAction: <function that takes an item and params and returns a button to be placed
+ *                     in the lower right of the preview>,
  *
  *     ******** the following values are optional ********
  *
@@ -35,7 +38,8 @@ import "./Modal.css";
  *                        modifications before they are used to query for recommendations>,
  *     submitOnLoad: <boolean that will submit a query when the type loads if true,
  *                    but defaults to false>,
- *     getPreviewSidebar: <function that returns a sidebar to place next to the article preview>
+ *     getPreviewSidebar: <function that returns a sidebar to place next to the article preview>,
+ *     languages: <list of language codes to restrict the source and target inputs to>,
  * }
  *
  */
@@ -56,6 +60,16 @@ export const TYPES = {
         },
         motivation: (item) => {
             return item.pageviews + ' recent views';
+        },
+        previewAction: (item, params) => {
+            return <I18nText className="rt-button-primary" onClick={() =>
+                window.open('https://' + params.source + '.wikipedia.org/wiki/Special:ContentTranslation?'
+                    + encodeParams({
+                        from: params.source,
+                        to: params.target,
+                        page: item.title,
+                        campaign: 'article-recommender-1'
+                    }))} name="modal-translate"/>;
         }
     },
     missing_sections: {
@@ -69,6 +83,7 @@ export const TYPES = {
         motivation: (item) => {
             return item.sections.length + ' sections to add';
         },
+        previewAction: () => '',
         getPreviewSidebar: (item) => {
             let sidebarItems = [];
             sidebarItems.push({
@@ -103,7 +118,8 @@ export const TYPES = {
         endpoint: 'https://recommend-related-articles.wmflabs.org/types/related_articles',
         specPath: '/spec',
         queryPath: '/v1/articles',
-        motivation: () => ''
+        motivation: () => '',
+        previewAction: () => ''
     },
     translation_test: {
         appTitle: 'title-gapfinder',
@@ -114,6 +130,16 @@ export const TYPES = {
         queryPath: '/v1/items',
         motivation: (item) => {
             return 'Prediction: ' + item.prediction;
+        },
+        previewAction: (item, params) => {
+            return <I18nText className="rt-button-primary" onClick={() =>
+                window.open('https://' + params.source + '.wikipedia.org/wiki/Special:ContentTranslation?'
+                    + encodeParams({
+                        from: params.source,
+                        to: params.target,
+                        page: item.title,
+                        campaign: 'article-recommender-1'
+                    }))} name="modal-translate"/>;
         },
         languages: [
             'aa', 'ab', 'ace', 'ady', 'af', 'ak', 'als', 'am', 'ang', 'an', 'arc', 'ar', 'arz', 'ast', 'as', 'av', 'ay',
@@ -144,6 +170,7 @@ class Type extends React.Component {
             recommendations: [],
             previewIndex: -1,
             recommendationsSourceLanguage: 'en',
+            recommendationParams: {},
             error: undefined,
             loading: false
         };
@@ -158,6 +185,7 @@ class Type extends React.Component {
     resetResult() {
         this.setState({
             recommendations: [],
+            recommendationParams: {},
             previewIndex: -1,
             error: undefined,
             loading: false
@@ -168,6 +196,7 @@ class Type extends React.Component {
         this.resetResult();
         this.setState({
             recommendationsSourceLanguage: values.hasOwnProperty('source') ? values.source : 'en',
+            recommendationParams: values,
             loading: true
         });
         const type = TYPES[this.props.match.params.type];
@@ -221,6 +250,7 @@ class Type extends React.Component {
                             index={this.state.previewIndex}
                             length={this.state.recommendations.length}
                             source={this.state.recommendationsSourceLanguage}
+                            params={this.state.recommendationParams}
                             changeIndex={this.showPreview.bind(this)}
                         />
                     </Modal>
