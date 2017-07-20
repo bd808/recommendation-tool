@@ -3,8 +3,8 @@ import "whatwg-fetch";
 import {BrowserRouter, Route, Redirect} from "react-router-dom";
 import {I18nProvider} from "./I18n";
 import Disclaimer from "./Disclaimer";
-import Type from "./Type";
 import "./Modal.css";
+import Translation from "./types/Translation";
 
 class App extends React.Component {
     constructor(p, c) {
@@ -27,7 +27,8 @@ class App extends React.Component {
                         <Route exact={true} path="/" render={() => (
                             <Redirect to="/missing_sections"/>
                         )}/>
-                        <Route path="/:type" component={Type}/>
+                        <Route path="/translation" component={Translation}/>
+                        {/*<Route path="/:type" component={Translation}/>*/}
                     </div>
                 </BrowserRouter>
             </I18nProvider>

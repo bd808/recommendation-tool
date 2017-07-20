@@ -1,15 +1,8 @@
 import React from "react";
 import "whatwg-fetch";
-import queryString from "query-string";
-import Modal from "react-modal";
 import {I18nText} from "./I18n";
-import Title from "./Title";
-import Input from "./Input";
-import Recommendations from "./Recommendations";
-import StatusMessage from "./StatusMessage";
-import Preview from "./Preview";
 import CustomMenu from "./CustomMenu";
-import {checkStatus, parseJSON, encodeParams} from './util';
+import {encodeParams} from './util';
 import "./Modal.css";
 import "./style.css";
 
@@ -23,11 +16,12 @@ import "./style.css";
  *     version: <i18n key for the version>,
  *     endpoint: <endpoint for the recommendation type>,
  *     specPath: <path, starting at the endpoint, to get the swagger spec>,
- *     queryPath: <path, starting at the endpoint, to send requests to get recommendations from>,
+ *     queryPath: <query path in swagger spec used to identify endpoint>,
  *     motivation: <function that takes an item and returns a motivation value to be placed in
  *                  the footer of the recommendation card>,
  *     previewAction: <function that takes an item and params and returns a button to be placed
  *                     in the lower right of the preview>,
+ *
  *
  *     ******** the following values are optional ********
  *
@@ -40,6 +34,10 @@ import "./style.css";
  *                    but defaults to false>,
  *     getPreviewSidebar: <function that returns a sidebar to place next to the article preview>,
  *     languages: <list of language codes to restrict the source and target inputs to>,
+ *     queryBuilder: <function that takes the params generated from Input and builds the query
+ *                    path to be appended to the endpoint for making requests>,
+ *     parseResponse: <function that takes the response from the endpoint and returns an array
+ *                     of recommendations>,
  * }
  *
  */
@@ -60,6 +58,36 @@ export const TYPES = {
         },
         motivation: (item) => {
             return item.pageviews + ' recent views';
+        },
+        previewAction: (item, params) => {
+            return <I18nText className="rt-button-primary" onClick={() =>
+                window.open('https://' + params.source + '.wikipedia.org/wiki/Special:ContentTranslation?'
+                    + encodeParams({
+                        from: params.source,
+                        to: params.target,
+                        page: item.title,
+                        campaign: 'article-recommender-1'
+                    }))} name="modal-translate"/>;
+        }
+    },
+    translation2: {
+        appTitle: 'title-gapfinder',
+        i18nKey: 'title-translation 2',
+        version: 'title-alpha',
+        endpoint: '',
+        specPath: 'https://en.wikipedia.org/api/rest_v1/?spec',
+        queryPath: '/data/recommendation/translation/{from_lang}{/seed_article}',
+        queryBuilder: (params) => {
+            const target = encodeURIComponent(params.target);
+            const source = encodeURIComponent(params.source);
+            const seed = params.seed ? '/' + encodeURIComponent(params.seed) : '';
+            return 'https://' + target + '.wikipedia.org/api/rest_v1/data/recommendation/translation/' + source + seed;
+        },
+        parseResponse: (response) => {
+            return response.items;
+        },
+        motivation: (item) => {
+            return item.sitelink_count + ' sitelinks';
         },
         previewAction: (item, params) => {
             return <I18nText className="rt-button-primary" onClick={() =>
@@ -162,121 +190,3 @@ export const TYPES = {
         ]
     }
 };
-
-class Type extends React.Component {
-    constructor(p, c) {
-        super(p, c);
-        this.state = {
-            recommendations: [],
-            previewIndex: -1,
-            recommendationsSourceLanguage: 'en',
-            recommendationParams: {},
-            error: undefined,
-            loading: false
-        };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.match.params.type !== nextProps.match.params.type) {
-            this.resetResult();
-        }
-    }
-
-    resetResult() {
-        this.setState({
-            recommendations: [],
-            recommendationParams: {},
-            previewIndex: -1,
-            error: undefined,
-            loading: false
-        });
-    }
-
-    onSubmitInput(values) {
-        this.props.history.push({
-            pathname: this.props.location.path,
-            search: encodeParams(values)
-        });
-        this.resetResult();
-        this.setState({
-            recommendationsSourceLanguage: values.hasOwnProperty('source') ? values.source : 'en',
-            recommendationParams: values,
-            loading: true
-        });
-        const type = TYPES[this.props.match.params.type];
-        let url = type.endpoint + type.queryPath;
-        let encodedParams = type.urlParamsBuilder ? type.urlParamsBuilder(values) : encodeParams(values);
-        if (encodedParams) {
-            url += '?' + encodedParams;
-        }
-        fetch(url)
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(this.setRecommendations.bind(this))
-            .catch((ex) => this.setState({error: ex, loading: false}));
-    }
-
-    setRecommendations(results) {
-        if (this.state.loading === true) {
-            this.setState({recommendations: results, loading: false});
-        }
-    }
-
-    showPreview(index) {
-        this.setState({previewIndex: index});
-    }
-
-    render() {
-        let parameters = queryString.parse(this.props.location.search);
-        let result = '';
-        if (this.state.loading === true) {
-            result = <StatusMessage><I18nText name="status-preparing"/></StatusMessage>;
-        } else if (this.state.error !== undefined) {
-            result = <StatusMessage>{JSON.stringify(this.state.error)}</StatusMessage>;
-        } else {
-            result = (
-                <div>
-                    <Recommendations
-                        items={this.state.recommendations}
-                        source={this.state.recommendationsSourceLanguage}
-                        type={TYPES[this.props.match.params.type]}
-                        showPreview={this.showPreview.bind(this)}
-                    />
-                    <Modal
-                        isOpen={this.state.previewIndex >= 0}
-                        onRequestClose={this.showPreview.bind(this, -1)}
-                        contentLabel=""
-                        className="Modal"
-                    >
-                        <Preview
-                            item={this.state.recommendations[this.state.previewIndex]}
-                            type={TYPES[this.props.match.params.type]}
-                            index={this.state.previewIndex}
-                            length={this.state.recommendations.length}
-                            source={this.state.recommendationsSourceLanguage}
-                            params={this.state.recommendationParams}
-                            changeIndex={this.showPreview.bind(this)}
-                        />
-                    </Modal>
-                </div>
-            );
-        }
-        return (
-            <div>
-                <Title
-                    title={TYPES[this.props.match.params.type].appTitle}
-                    version={TYPES[this.props.match.params.type].version}
-                />
-                <Input
-                    types={TYPES}
-                    type={this.props.match.params.type}
-                    params={parameters}
-                    onSubmit={this.onSubmitInput.bind(this)}
-                />
-                {result}
-            </div>
-        )
-    }
-}
-
-export default Type;

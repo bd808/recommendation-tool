@@ -22,16 +22,18 @@ class TypeSelector extends React.Component {
 
     render() {
         let dropdownItems = [];
+        /*
         for (const key of Object.keys(this.props.types)) {
             dropdownItems.push({
                 label: this.props.types[key].i18nKey,
                 value: key
             });
         }
+        */
         return (
             <Dropdown items={dropdownItems} itemFactory={this.itemFactory.bind(this)}>
                 <div className="rt-button">
-                    <I18nText className="rt-selector-text" name={this.props.types[this.props.type].i18nKey}/>
+                    {/*<I18nText className="rt-selector-text" name={this.props.types[this.props.type].i18nKey}/>*/}
                     <SelectorImage />
                 </div>
             </Dropdown>

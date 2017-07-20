@@ -90,7 +90,7 @@ class Recommendations extends React.Component {
                     </div>
                     <div className="Recommendations-footer">
                         <div className="Recommendations-motivation">
-                            {this.props.type.motivation(item.raw_item)}
+                            {this.props.motivation(item.raw_item)}
                         </div>
                     </div>
                 </div>
@@ -108,8 +108,7 @@ Recommendations.propTypes = {
     source: React.PropTypes.string.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
         title: React.PropTypes.string.isRequired
-    })).isRequired,
-    type: React.PropTypes.object.isRequired
+    })).isRequired
 };
 
 export default Recommendations;

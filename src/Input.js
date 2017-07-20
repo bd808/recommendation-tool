@@ -3,48 +3,18 @@ import "whatwg-fetch";
 import TypeSelector from "./TypeSelector";
 import LanguageSelector from "./LanguageSelector";
 import Search from "./Search";
-import {checkStatus, parseJSON} from './util';
 import "./Input.css";
 
 class Input extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            spec: [],
             values: {
-                source: props.params.source || undefined,
-                target: props.params.target || undefined,
-                seed: props.params.seed || ''
+                source: props.queryParams.source || undefined,
+                target: props.queryParams.target || undefined,
+                seed: props.queryParams.seed || ''
             }
         };
-    }
-
-    componentDidMount() {
-        this.updateForType(this.props.types[this.props.type]);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.type !== this.props.type) {
-            this.setState({spec: []});
-            this.updateForType(nextProps.types[nextProps.type]);
-        }
-    }
-
-    updateForType(type) {
-        let path = type.endpoint + type.specPath;
-        this.fetchSpec(path);
-    }
-
-    fetchSpec(path) {
-        fetch(path)
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(this.setSpec.bind(this))
-            .then(this.submitOnLoad.bind(this));
-    }
-
-    setSpec(data) {
-        this.setState({spec: data['paths'][this.props.types[this.props.type].queryPath]['get']['parameters']});
     }
 
     submitOnLoad() {
@@ -100,10 +70,7 @@ class Input extends React.Component {
     }
 
     hasParameter(name) {
-        const paramInSpec = this.state.spec.find(parameter => parameter['name'] === name);
-        const restrictedInputParams = this.props.types[this.props.type].restrictInput;
-        const paramNotRestricted = restrictedInputParams ? restrictedInputParams.indexOf(name) !== -1 : true;
-        return paramNotRestricted && paramInSpec;
+        return this.props.params.indexOf(name) !== -1;
     }
 
     render() {
@@ -113,12 +80,12 @@ class Input extends React.Component {
                                       params={this.state.values} onSetType={this.props.onSetType}/>);
         if (this.hasParameter('source')) {
             parameters.push(<LanguageSelector key="source" value={this.state.values.source} name="selector-source"
-                                              languages={this.props.types[this.props.type].languages}
+                                              languages={undefined}
                                               onSelect={this.setSource.bind(this)}/>);
         }
         if (this.hasParameter('target')) {
             parameters.push(<LanguageSelector key="target" value={this.state.values.target} name="selector-target"
-                                              languages={this.props.types[this.props.type].languages}
+                                              languages={undefined}
                                               onSelect={this.setTarget.bind(this)}/>);
         }
         parameters.push(<div key="search" className="rt-button-primary" onClick={this.submitInput.bind(this)}>
