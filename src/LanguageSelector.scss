@@ -2,11 +2,10 @@
 
 .LanguageSelector-container {
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
   background-color: $background-color-framed;
   overflow-y: auto;
-  width: 40rem;
+  width: 35rem;
 }
 
 .LanguageSelector-item-container {
@@ -25,4 +24,8 @@
 .LanguageSelector-item {
   flex: 0 1 auto;
   font-size: .8rem;
+  width: 5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

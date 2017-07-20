@@ -15,7 +15,9 @@ export function parseJSON(response) {
 export function encodeParams(params) {
     let encodedParams = [];
     for (const key of Object.keys(params)) {
-        encodedParams.push(key + '=' + encodeURIComponent(params[key]));
+        if (params[key]) {
+            encodedParams.push(key + '=' + encodeURIComponent(params[key]));
+        }
     }
     return encodedParams.join('&');
 }

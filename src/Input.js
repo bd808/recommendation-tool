@@ -110,7 +110,7 @@ class Input extends React.Component {
         let parameters = [];
         let searchBar = [];
         parameters.push(<TypeSelector key="type-selector" types={this.props.types} type={this.props.type}
-                                      params={this.props.params} onSetType={this.props.onSetType}/>);
+                                      params={this.state.values} onSetType={this.props.onSetType}/>);
         if (this.hasParameter('source')) {
             parameters.push(<LanguageSelector key="source" value={this.state.values.source} name="selector-source"
                                               languages={this.props.types[this.props.type].languages}

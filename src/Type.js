@@ -193,6 +193,10 @@ class Type extends React.Component {
     }
 
     onSubmitInput(values) {
+        this.props.history.push({
+            pathname: this.props.location.path,
+            search: encodeParams(values)
+        });
         this.resetResult();
         this.setState({
             recommendationsSourceLanguage: values.hasOwnProperty('source') ? values.source : 'en',
