@@ -4,8 +4,16 @@ import MenuImage from "./images/MenuImage";
 
 const menuItems = [
     {
+        label: 'menu-documentation',
+        value: 'https://www.mediawiki.org/wiki/GapFinder'
+    },
+    {
+        label: 'menu-feedback',
+        value: 'https://www.mediawiki.org/wiki/Talk:GapFinder'
+    },
+    {
         label: 'menu-source-code',
-        value: 'https://github.com/schana/recommendation-tool',
+        value: 'https://github.com/schana/recommendation-tool'
     },
     {
         label: 'menu-privacy-statement',

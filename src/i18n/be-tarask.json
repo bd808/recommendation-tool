@@ -18,6 +18,7 @@
 	"status-preparing": "Падрыхтоўка рэкамэндаваных артыкулаў…",
 	"status-must-be-different": "Крынічная і мэтавая мовы мусяць адрозьнівацца",
 	"status-invalid-language": "Няслушная крынічная або мэтавая мова",
+	"status-no-results": "Няма даступных рэкамэндацыяў для зададзеных парамэтраў",
 	"article-pageviews": "$1 {{PLURAL:$1|нядаўні прагляд|нядаўнія прагляды|нядаўніх праглядаў}}",
 	"article-flag": "Пазначыць гэты артыкул…",
 	"article-flag-not-interesting": "Не цікава",
@@ -29,6 +30,13 @@
 	"modal-translate": "Перакласьці",
 	"modal-create-from-scratch": "Стварыць з нуля",
 	"modal-loading": "Загрузка…",
-	"modal-preview-fail": "Няма інтэрнэту",
-	"create-title": "Новы артыкул"
+	"modal-preview-fail": "Не атрымалася загрузіць папярэдні прагляд",
+	"create-title": "Новы артыкул",
+	"create-title-input-placeholder": "Загаловак перакладу",
+	"create-warning": "Увага!",
+	"create-action": "Стварыць",
+	"create-error-empty": "Загаловак ня мусіць быць пустым",
+	"create-error-invalid-character": "Няслушны сымбаль у загалоўку ('|')",
+	"create-error-exists": "Старонка ўжо існуе $1",
+	"create-error-invalid-page": "Няслушная старонка $1"
 }
