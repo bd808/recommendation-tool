@@ -69,7 +69,7 @@ class Recommendations extends React.Component {
 
     render() {
         let items = [];
-        for (const index of Object.keys(this.state.items)) {
+        for (const index of Object.keys(this.state.items).sort((a, b) => a - b)) {
             const item = this.state.items[index];
             items.push(
                 <div key={index} className="Recommendations-item" onClick={() => this.props.showPreview(+index)}>
