@@ -11,7 +11,7 @@ class Disclaimer extends React.Component {
 
     render() {
         if (!this.state.hasDismissedDisclaimer) {
-            const labs = <a href="https://wikitech.wikimedia.org/wiki/Help:FAQ">Wikimedia Labs</a>;
+            const labs = <a href="https://wikitech.wikimedia.org/wiki/Help:FAQ">Wikimedia Cloud VPS</a>;
             const informationCollected = <a href="https://phabricator.wikimedia.org/T124503">Information collected</a>;
             const thisPrivacyStatement =
                 <a href="https://wikimediafoundation.org/wiki/Recommendations_Tool_Privacy_Statement">this privacy
